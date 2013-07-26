@@ -1,29 +1,26 @@
 package com.windward.qbosatt;
 
-import com.realops.foundation.adapterframework.configuration.AdapterConfigurationException;
-import com.realops.foundation.adapterframework.configuration.BaseAdapterConfiguration;
-
-import java.util.Hashtable;
-import java.util.Set;
+import com.realops.foundation.adapterframework.AbstractActorAdapter;
+import com.realops.foundation.adapterframework.AdapterException;
+import com.realops.foundation.adapterframework.AdapterRequest;
+import com.realops.foundation.adapterframework.AdapterResponse;
 
 /**
  * Created with IntelliJ IDEA.
  * User: aglover
  * Date: 7/26/13
- * Time: 2:05 PM
- *
+ * Time: 2:14 PM
+ * To change this template use File | Settings | File Templates.
  */
-public class QbosAdaptor extends BaseAdapterConfiguration {
+public class QbosAdaptor extends AbstractActorAdapter {
 
-    public QbosAdaptor(String adapterId) {
-        super(adapterId);
+    @Override
+    public AdapterResponse performAction(AdapterRequest adapterRequest) throws AdapterException, InterruptedException {
+        return null;  //To change body of implemented methods use File | Settings | File Templates.
     }
 
-    public QbosAdaptor(String id, Hashtable defaults) {
-        super(id, defaults);
-    }
-
-    public QbosAdaptor(String id, Hashtable defaults, Set validKeys, Set requiredKeys) throws AdapterConfigurationException {
-        super(id, defaults, validKeys, requiredKeys);
+    @Override
+    public void shutdown() throws AdapterException {
+        //To change body of implemented methods use File | Settings | File Templates.
     }
 }
