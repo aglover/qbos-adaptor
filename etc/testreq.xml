@@ -1,0 +1,14 @@
+<adapter-request>
+   <target-adapter>responseAdapter</target-adapter>
+   <peer-location>
+      <location>this</location>
+      <peer-name/>
+   </peer-location>
+   <request-action>crud-thing</request-action>
+   <request-data>
+    <params>
+        <param1>foo</param1>
+        <param2>bar</param2>
+    </params>
+   </request-data>
+</adapter-request>
