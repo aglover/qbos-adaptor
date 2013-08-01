@@ -19,7 +19,7 @@ import static java.lang.Class.forName;
  * Date: 7/26/13
  * Time: 2:14 PM
  */
-public class QbosAdaptor extends AbstractActorAdapter {
+public class QbosAdapter extends AbstractActorAdapter {
 
     private QTP qtpInstance;
 

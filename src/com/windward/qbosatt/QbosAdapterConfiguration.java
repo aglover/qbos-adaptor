@@ -13,17 +13,17 @@ import java.util.Set;
  * Time: 2:05 PM
  *
  */
-public class QbosAdaptorConfiguration extends BaseAdapterConfiguration {
+public class QbosAdapterConfiguration extends BaseAdapterConfiguration {
 
-    public QbosAdaptorConfiguration(String adapterId) {
+    public QbosAdapterConfiguration(String adapterId) {
         super(adapterId);
     }
 
-    public QbosAdaptorConfiguration(String id, Hashtable defaults) {
+    public QbosAdapterConfiguration(String id, Hashtable defaults) {
         super(id, defaults);
     }
 
-    public QbosAdaptorConfiguration(String id, Hashtable defaults, Set validKeys, Set requiredKeys) throws AdapterConfigurationException {
+    public QbosAdapterConfiguration(String id, Hashtable defaults, Set validKeys, Set requiredKeys) throws AdapterConfigurationException {
         super(id, defaults, validKeys, requiredKeys);
     }
 }

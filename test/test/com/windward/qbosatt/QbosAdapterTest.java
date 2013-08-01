@@ -6,7 +6,7 @@ import com.realops.common.xml.InvalidXMLFormatException;
 import com.realops.common.xml.XML;
 import com.realops.foundation.adapterframework.AdapterRequest;
 import com.realops.foundation.adapterframework.AdapterResponse;
-import com.windward.qbosatt.QbosAdaptor;
+import com.windward.qbosatt.QbosAdapter;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -21,7 +21,7 @@ import static org.mockito.Mockito.*;
  * Date: 7/26/13
  * Time: 3:23 PM
  */
-public class QbosAdaptorTest {
+public class QbosAdapterTest {
 
     @Test
     public void testLoginRequest() throws Exception {
@@ -29,7 +29,7 @@ public class QbosAdaptorTest {
         when(qtpThing.getTicket()).thenReturn("test-ticket");
         XML xml = XML.read("etc/test-login-req.xml");
         AdapterRequest request = new AdapterRequest(xml);
-        QbosAdaptor adaptor = new QbosAdaptor();
+        QbosAdapter adaptor = new QbosAdapter();
         adaptor.setQtpInstance(qtpThing);
         AdapterResponse adapterResponse = adaptor.performAction(request);
         assertNotNull("adapterResponse was not null?", adapterResponse);
@@ -45,7 +45,7 @@ public class QbosAdaptorTest {
         doThrow(new UnknownQtpException()).when(qtpThing).logIn("", "cdale@windwardits.com", "Rilda411");
         XML xml = XML.read("etc/test-login-req-err.xml");
         AdapterRequest request = new AdapterRequest(xml);
-        QbosAdaptor adaptor = new QbosAdaptor();
+        QbosAdapter adaptor = new QbosAdapter();
         adaptor.setQtpInstance(qtpThing);
         AdapterResponse adapterResponse = adaptor.performAction(request);
         assertNotNull("adapterResponse was not null?", adapterResponse);
@@ -88,7 +88,7 @@ public class QbosAdaptorTest {
     public void testNotNullResponse() throws Exception {
         XML xml = XML.read("etc/test-invalid-req.xml");
         AdapterRequest request = new AdapterRequest(xml);
-        QbosAdaptor adaptor = new QbosAdaptor();
+        QbosAdapter adaptor = new QbosAdapter();
         AdapterResponse adapterResponse = adaptor.performAction(request);
         assertNotNull("adapterResponse was not null?", adapterResponse);
         assertEquals("FAILURE", adapterResponse.getData().getText());
