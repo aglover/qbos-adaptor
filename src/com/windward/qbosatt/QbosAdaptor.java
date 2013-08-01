@@ -1,5 +1,6 @@
 package com.windward.qbosatt;
 
+import com.qbos.QTP.QTP;
 import com.realops.common.enumeration.StateEnum;
 import com.realops.common.enumeration.Status;
 import com.realops.common.xml.InvalidXMLFormatException;
@@ -17,36 +18,60 @@ import com.realops.foundation.adapterframework.AdapterResponse;
  */
 public class QbosAdaptor extends AbstractActorAdapter {
 
+    private QTP qtpInstance;
+
+    /**
+     * IoC mainly used for testing; that is, a mock instance can be provided
+     * see getQtpInstance for more details
+     *
+     * @param instance
+     */
+    public void setQtpInstance(QTP instance) {
+        this.qtpInstance = instance;
+    }
+
+    /**
+     * This method is used internally to return either a
+     * supplied QTP instance (most likely a mock one) or if none
+     * if present as a member variable, a new one is instantiated
+     *
+     * @return QTP instance
+     * @throws Exception
+     */
+    private QTP getQtpInstance() throws Exception {
+        if (this.qtpInstance == null) {
+            return new QTP();
+        } else {
+            return this.qtpInstance;
+        }
+    }
+
     @Override
     public AdapterResponse performAction(AdapterRequest adapterRequest) throws AdapterException, InterruptedException {
-        XML stuff = adapterRequest.toXML();
-//        XML stuff = adapterRequest.getData();
-        String xmlraw = stuff.toCompactString();
-        System.out.println("raw in adaptor is " + xmlraw);
 
         System.out.println("action is: " + adapterRequest.getAction());
 
+        if (adapterRequest.getAction().equalsIgnoreCase("serverLogin")) {
+            XML loginXML = adapterRequest.getData();
+            String qsi = loginXML.getChild("qsi").getText();
+            String account = loginXML.getChild("account").getText();
+            String psswrd = loginXML.getChild("password").getText();
+            try {
+                QTP qtp = this.getQtpInstance();
+                qtp.logIn(qsi, account, psswrd);
+                String token = qtp.getTicket();
 
-        System.out.println("action is: " + adapterRequest.getData().toPrettyString());
-        XML datastuff = adapterRequest.getData();
+                return new AdapterResponse(300, "QTP ticket: " + token,
+                        new XML("response").setText(token), Status.SUCCESS);
+            } catch (Exception e) {
+                //do something!
+            }
+        } else {
+//            System.out.println("action is: " + adapterRequest.getData().toPrettyString());
+            XML datastuff = adapterRequest.getData();
 
-        System.out.println("param 1: " + datastuff.getChild("param1").getText());
-//        <adapter-response>
-//          <execution-duration>3000</execution-duration>
-//          <status>success</status>
-//          <message/>
-//          <data>
-//            <response>foo</response>
-//          </data>
-//        </adapter-response>
-
-        XML parent = new XML("adapter-response");
-        parent.addChild(new XML("execution-duration").setText("0"));
-        parent.addChild(new XML("status").setText("success"));
-        parent.addChild(new XML("message"));
-        XML child = new XML("data");
-        child.addChild(new XML("response").setText("FOO"));
-        parent.addChild(child);
+//            System.out.println("param 1: " + datastuff.getChild("param1").getText());
+        }
 
         try {
             return new AdapterResponse(300, "Foo", new XML("response").setText("FOO"), Status.SUCCESS);
