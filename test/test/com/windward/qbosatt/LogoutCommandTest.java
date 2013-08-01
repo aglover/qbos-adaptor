@@ -1,5 +1,6 @@
 package test.com.windward.qbosatt;
 
+import com.qbos.QTP.InvalidCredentialsException;
 import com.qbos.QTP.QTP;
 import com.realops.common.xml.XML;
 import com.realops.foundation.adapterframework.AdapterRequest;
@@ -37,6 +38,21 @@ public class LogoutCommandTest {
         AdapterResponse adapterResponse = adaptor.performAction(request);
         assertNotNull("adapterResponse was not null?", adapterResponse);
         verify(qtpThing, times(1)).logOut();
+        assertEquals("successful logout", adapterResponse.getData().getText());
+    }
+
+    @Test
+    public void testLoginRequestWithExpiredTicket() throws Exception {
+        PowerMockito.mockStatic(QTP.class);
+        QTP qtpThing = mock(QTP.class);
+        when(QTP.Create("dm2q", "0C4F7501U1143U5955UDC8C1EB43B06C988")).thenThrow(new InvalidCredentialsException("test"));
+        XML xml = XML.read("etc/test-logout-req.xml");
+        AdapterRequest request = new AdapterRequest(xml);
+        QbosAdapter adaptor = new QbosAdapter();
+        adaptor.setQtpInstance(qtpThing);
+        AdapterResponse adapterResponse = adaptor.performAction(request);
+        assertNotNull("adapterResponse was not null?", adapterResponse);
+        verify(qtpThing, times(0)).logOut(); //logout never called b/c ticket expired
         assertEquals("successful logout", adapterResponse.getData().getText());
     }
 }
