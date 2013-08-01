@@ -1,0 +1,15 @@
+<adapter-request>
+    <target-adapter>responseAdapter</target-adapter>
+    <peer-location>
+        <location>this</location>
+        <peer-name/>
+    </peer-location>
+    <request-action>serverLogin</request-action>
+    <request-data>
+        <credentials>
+            <qsi></qsi>
+            <account>cdale@windwardits.com</account>
+            <password>Rilda411</password>
+        </credentials>
+    </request-data>
+</adapter-request>

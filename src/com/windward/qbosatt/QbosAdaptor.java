@@ -3,12 +3,15 @@ package com.windward.qbosatt;
 import com.qbos.QTP.QTP;
 import com.realops.common.enumeration.StateEnum;
 import com.realops.common.enumeration.Status;
-import com.realops.common.xml.InvalidXMLFormatException;
 import com.realops.common.xml.XML;
 import com.realops.foundation.adapterframework.AbstractActorAdapter;
 import com.realops.foundation.adapterframework.AdapterException;
 import com.realops.foundation.adapterframework.AdapterRequest;
 import com.realops.foundation.adapterframework.AdapterResponse;
+import com.windward.qbosatt.cmds.AbstractCommand;
+import org.apache.commons.lang.WordUtils;
+
+import static java.lang.Class.forName;
 
 /**
  * Created with IntelliJ IDEA.
@@ -50,36 +53,22 @@ public class QbosAdaptor extends AbstractActorAdapter {
     public AdapterResponse performAction(AdapterRequest adapterRequest) throws AdapterException, InterruptedException {
 
         System.out.println("action is: " + adapterRequest.getAction());
-
-        if (adapterRequest.getAction().equalsIgnoreCase("serverLogin")) {
-            XML loginXML = adapterRequest.getData();
-            String qsi = loginXML.getChild("qsi").getText();
-            String account = loginXML.getChild("account").getText();
-            String psswrd = loginXML.getChild("password").getText();
-            try {
-                QTP qtp = this.getQtpInstance();
-                qtp.logIn(qsi, account, psswrd);
-                String token = qtp.getTicket();
-
-                return new AdapterResponse(300, "QTP ticket: " + token,
-                        new XML("response").setText(token), Status.SUCCESS);
-            } catch (Exception e) {
-                //do something!
-            }
-        } else {
-//            System.out.println("action is: " + adapterRequest.getData().toPrettyString());
-            XML datastuff = adapterRequest.getData();
-
-//            System.out.println("param 1: " + datastuff.getChild("param1").getText());
-        }
-
         try {
-            return new AdapterResponse(300, "Foo", new XML("response").setText("FOO"), Status.SUCCESS);
+            AbstractCommand cmd = newCommand(adapterRequest);
+            cmd.setQtpInstance(this.getQtpInstance());
+            return cmd.execute(adapterRequest);
         } catch (Exception e) {
-            e.printStackTrace();
-            return null;
+            return new AdapterResponse(300, "FAILURE: " + e.getLocalizedMessage(),
+                    new XML("response").setText("FAILURE"), Status.ERROR);
         }
+    }
 
+    private AbstractCommand newCommand(AdapterRequest adapterRequest) throws InstantiationException, IllegalAccessException, ClassNotFoundException {
+        return (AbstractCommand) forName(getCmdClassName(adapterRequest)).newInstance();
+    }
+
+    private String getCmdClassName(AdapterRequest adapterRequest) {
+        return "com.windward.qbosatt.cmds." + WordUtils.capitalize(adapterRequest.getAction()) + "Command";
     }
 
     @Override

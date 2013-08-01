@@ -1,23 +1,19 @@
 package test.com.windward.qbosatt;
 
 import com.qbos.QTP.QTP;
+import com.qbos.QTP.UnknownQtpException;
 import com.realops.common.xml.InvalidXMLFormatException;
 import com.realops.common.xml.XML;
 import com.realops.foundation.adapterframework.AdapterRequest;
 import com.realops.foundation.adapterframework.AdapterResponse;
 import com.windward.qbosatt.QbosAdaptor;
-import org.junit.Assert;
 import org.junit.Test;
 
 import java.io.IOException;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
-import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.mockito.Mockito.*;
 
 /**
  * Created with IntelliJ IDEA.
@@ -42,15 +38,30 @@ public class QbosAdaptorTest {
         assertEquals("test-ticket", adapterResponse.getData().getText());
     }
 
+    @Test
+    public void testFailureLoginRequest() throws Exception {
+        QTP qtpThing = mock(QTP.class);
+        //ensure that an exception is thrown w/bab qtpticket
+        doThrow(new UnknownQtpException()).when(qtpThing).logIn("", "cdale@windwardits.com", "Rilda411");
+        XML xml = XML.read("etc/test-login-req-err.xml");
+        AdapterRequest request = new AdapterRequest(xml);
+        QbosAdaptor adaptor = new QbosAdaptor();
+        adaptor.setQtpInstance(qtpThing);
+        AdapterResponse adapterResponse = adaptor.performAction(request);
+        assertNotNull("adapterResponse was not null?", adapterResponse);
+        verify(qtpThing, times(1)).logIn("", "cdale@windwardits.com", "Rilda411");
+        assertEquals("FAILURE", adapterResponse.getData().getText());
+    }
+
     /**
-     *  <adapter-response>
-     *   <execution-duration>3000</execution-duration>
-     *   <status>success</status>
-     *   <message/>
-     *   <data>
-     *    <response>foo</response>
-     *   </data>
-     *  </adapter-response>
+     * <adapter-response>
+     * <execution-duration>3000</execution-duration>
+     * <status>success</status>
+     * <message/>
+     * <data>
+     * <response>foo</response>
+     * </data>
+     * </adapter-response>
      */
     @Test
     public void testXMLObject() {
