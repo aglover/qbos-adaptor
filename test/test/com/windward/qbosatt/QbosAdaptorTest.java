@@ -86,12 +86,12 @@ public class QbosAdaptorTest {
 
     @Test
     public void testNotNullResponse() throws Exception {
-        XML xml = XML.read("etc/testreq.xml");
+        XML xml = XML.read("etc/test-invalid-req.xml");
         AdapterRequest request = new AdapterRequest(xml);
         QbosAdaptor adaptor = new QbosAdaptor();
         AdapterResponse adapterResponse = adaptor.performAction(request);
         assertNotNull("adapterResponse was not null?", adapterResponse);
-        assertEquals("FOO", adapterResponse.getData().getText());
+        assertEquals("FAILURE", adapterResponse.getData().getText());
     }
 
 }
