@@ -23,6 +23,7 @@
                 <path refid="classpath"/>
             </classpath>
         </javac>
+        <copy file="src/log4j.properties" tofile="${classes.dir}/log4j.properties"/>
     </target>
 
 
