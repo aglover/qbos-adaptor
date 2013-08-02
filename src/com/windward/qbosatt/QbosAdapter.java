@@ -52,7 +52,6 @@ public class QbosAdapter extends AbstractActorAdapter {
     @Override
     public AdapterResponse performAction(AdapterRequest adapterRequest) throws AdapterException, InterruptedException {
 
-        System.out.println("action is: " + adapterRequest.getAction());
         try {
             AbstractCommand cmd = newCommand(adapterRequest);
             cmd.setQtpInstance(this.getQtpInstance());
