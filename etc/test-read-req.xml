@@ -1,0 +1,16 @@
+<adapter-request>
+    <target-adapter>responseAdapter</target-adapter>
+    <peer-location>
+        <location>this</location>
+        <peer-name/>
+    </peer-location>
+    <request-action>read</request-action>
+    <request-data>
+        <create>
+            <qsi>dm2q</qsi>
+            <ticket>0C4F7501U1143U5955UDC8C1EB43B06C988</ticket>
+            <classId>11614</classId>
+            <recordData />
+        </create>
+    </request-data>
+</adapter-request>
