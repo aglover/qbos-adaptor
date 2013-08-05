@@ -22,26 +22,36 @@ import static org.mockito.Mockito.*;
  * Created with IntelliJ IDEA.
  * User: aglover
  * Date: 8/4/13
- * Time: 8:21 PM
+ * Time: 8:26 PM
  */
-@RunWith(PowerMockRunner.class)
-@PrepareForTest(QTP.class)
-public class ReadCommandTest {
+public class PingCommandTest {
     @Test
-    public void testReadCommand() throws Exception {
-        PowerMockito.mockStatic(QTP.class);
+    public void testPingRequest() throws Exception {
         QTP qtpThing = mock(QTP.class);
-        when(QTP.Create("dm2q", "0C4F7501U1143U5955UDC8C1EB43B06C988")).thenReturn(qtpThing);
-        when(qtpThing.updateRecord(any(Applet.class))).thenReturn(new Long(10000000000L));
-        XML xml = XML.read("etc/test-read-req.xml");
+        when(qtpThing.ping()).thenReturn(true);
+        XML xml = XML.read("etc/test-ping-req.xml");
         AdapterRequest request = new AdapterRequest(xml);
         QbosAdapter adaptor = new QbosAdapter();
         adaptor.setQtpInstance(qtpThing);
         AdapterResponse adapterResponse = adaptor.performAction(request);
-        PowerMockito.verifyStatic(Mockito.times(1));
-        QTP.Create("dm2q", "0C4F7501U1143U5955UDC8C1EB43B06C988");
         assertNotNull("adapterResponse was not null?", adapterResponse);
-        verify(qtpThing, times(1)).updateRecord(any(Applet.class));
-        assertEquals("10000000000", adapterResponse.getData().getText());
+        verify(qtpThing, times(1)).ping();
+
+        assertEquals("true", adapterResponse.getData().getText());
+    }
+
+    @Test
+    public void testPingFalseRequest() throws Exception {
+        QTP qtpThing = mock(QTP.class);
+        when(qtpThing.ping()).thenReturn(false);
+        XML xml = XML.read("etc/test-ping-req.xml");
+        AdapterRequest request = new AdapterRequest(xml);
+        QbosAdapter adaptor = new QbosAdapter();
+        adaptor.setQtpInstance(qtpThing);
+        AdapterResponse adapterResponse = adaptor.performAction(request);
+        assertNotNull("adapterResponse was not null?", adapterResponse);
+        verify(qtpThing, times(1)).ping();
+
+        assertEquals("false", adapterResponse.getData().getText());
     }
 }

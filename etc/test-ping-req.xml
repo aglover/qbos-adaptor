@@ -1,0 +1,11 @@
+<adapter-request>
+    <target-adapter>responseAdapter</target-adapter>
+    <peer-location>
+        <location>this</location>
+        <peer-name/>
+    </peer-location>
+    <request-action>ping</request-action>
+    <request-data>
+        <ping/>
+    </request-data>
+</adapter-request>
