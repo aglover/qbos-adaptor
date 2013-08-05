@@ -28,8 +28,7 @@ public class ServerLoginCommand extends AbstractCommand {
             return new AdapterResponse(300, "QTP ticket: " + token,
                     new XML("response").setText(token), Status.SUCCESS);
         } catch (Exception e) {
-            return new AdapterResponse(300, "FAILURE: " + e.getLocalizedMessage(),
-                    new XML("response").setText("FAILURE"), Status.ERROR);
+            return exceptionResponse(e);
         }
     }
 }

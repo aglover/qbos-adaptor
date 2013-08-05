@@ -24,10 +24,7 @@ public class ReadCommand extends AbstractCommand {
             return new AdapterResponse(300, "QTP Create successful: " + recordId,
                     new XML("response").setText(Long.toString(recordId)), Status.SUCCESS);
         } catch (Exception e) {
-
-            return new AdapterResponse(300, "FAILURE: " + e.getLocalizedMessage(),
-                    new XML("response").setText("FAILURE"), Status.ERROR);
-
+            return exceptionResponse(e);
         }
     }
 }

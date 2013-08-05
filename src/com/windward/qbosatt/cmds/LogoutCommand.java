@@ -25,8 +25,7 @@ public class LogoutCommand extends AbstractCommand {
             if (e instanceof InvalidCredentialsException) {
                 return getSuccessResponse();
             } else {
-                return new AdapterResponse(300, "FAILURE: " + e.getLocalizedMessage(),
-                        new XML("response").setText("FAILURE"), Status.ERROR);
+                return exceptionResponse(e);
             }
         }
     }

@@ -1,6 +1,8 @@
 package com.windward.qbosatt.cmds;
 
 import com.qbos.QTP.QTP;
+import com.realops.common.enumeration.Status;
+import com.realops.common.xml.XML;
 import com.realops.foundation.adapterframework.AdapterRequest;
 import com.realops.foundation.adapterframework.AdapterResponse;
 
@@ -36,4 +38,9 @@ public abstract class AbstractCommand {
     }
 
     public abstract AdapterResponse execute(AdapterRequest adapterRequest);
+
+    protected AdapterResponse exceptionResponse(Exception e) {
+        return new AdapterResponse(300, "FAILURE: " + e.getLocalizedMessage(),
+                new XML("response").setText("FAILURE"), Status.ERROR);
+    }
 }

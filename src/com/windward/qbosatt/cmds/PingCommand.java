@@ -16,13 +16,11 @@ public class PingCommand extends AbstractCommand{
     @Override
     public AdapterResponse execute(AdapterRequest adapterRequest) {
         try {
-            QTP qtp = this.getQtpInstance();
-            boolean status = qtp.ping();
+            boolean status = this.getQtpInstance().ping();
             return new AdapterResponse(300, "QTP status: " + status,
                     new XML("response").setText(Boolean.toString(status)), Status.SUCCESS);
         } catch (Exception e) {
-            return new AdapterResponse(300, "FAILURE: " + e.getLocalizedMessage(),
-                    new XML("response").setText("FAILURE"), Status.ERROR);
+            return exceptionResponse(e);
         }
     }
 }
