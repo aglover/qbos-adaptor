@@ -32,11 +32,7 @@ public abstract class AbstractCommand {
      * @throws Exception
      */
     protected QTP getQtpInstance() throws Exception {
-        if (this.qtpInstance == null) {
-            return new QTP();
-        } else {
-            return this.qtpInstance;
-        }
+        return (this.qtpInstance == null) ? new QTP() : this.qtpInstance;
     }
 
     public abstract AdapterResponse execute(AdapterRequest adapterRequest);

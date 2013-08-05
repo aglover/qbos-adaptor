@@ -9,9 +9,9 @@ import com.realops.foundation.adapterframework.AdapterException;
 import com.realops.foundation.adapterframework.AdapterRequest;
 import com.realops.foundation.adapterframework.AdapterResponse;
 import com.windward.qbosatt.cmds.AbstractCommand;
-import org.apache.commons.lang.WordUtils;
 
 import static java.lang.Class.forName;
+import static org.apache.commons.lang.WordUtils.capitalize;
 
 /**
  * Created with IntelliJ IDEA.
@@ -42,16 +42,11 @@ public class QbosAdapter extends AbstractActorAdapter {
      * @throws Exception
      */
     private QTP getQtpInstance() throws Exception {
-        if (this.qtpInstance == null) {
-            return new QTP();
-        } else {
-            return this.qtpInstance;
-        }
+        return (this.qtpInstance == null) ? new QTP() : this.qtpInstance;
     }
 
     @Override
     public AdapterResponse performAction(AdapterRequest adapterRequest) throws AdapterException, InterruptedException {
-
         try {
             AbstractCommand cmd = newCommand(adapterRequest);
             cmd.setQtpInstance(this.getQtpInstance());
@@ -67,7 +62,7 @@ public class QbosAdapter extends AbstractActorAdapter {
     }
 
     private String getCmdClassName(AdapterRequest adapterRequest) {
-        return "com.windward.qbosatt.cmds." + WordUtils.capitalize(adapterRequest.getAction()) + "Command";
+        return "com.windward.qbosatt.cmds." + capitalize(adapterRequest.getAction()) + "Command";
     }
 
     @Override
