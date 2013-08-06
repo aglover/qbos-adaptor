@@ -10,7 +10,18 @@
             <qsi>dm2q</qsi>
             <ticket>0C4F7501U1143U5955UDC8C1EB43B06C988</ticket>
             <classId>11614</classId>
-            <recordData />
+            <request_data>
+                <Server_Platform>Neo2 Consumer DNS</Server_Platform>
+                <Location>Arlington</Location>
+                <OS_Name>Red Hat</OS_Name>
+                <OS_Version>12.1</OS_Version>
+                <Server_Name>pxedemo</Server_Name>
+                <MAC_Address>00:oC:29:0F:B7:C8</MAC_Address>
+                <IP_Address>192.168.92.169</IP_Address>
+                <Submit_Request_SW></Submit_Request_SW>
+                <ASB_Catalog_Id>77</ASB_Catalog_Id>
+                <Notes>This is sample add request for the ASB Request App in Windward ITS space.</Notes>
+            </request_data>
         </create>
     </request-data>
 </adapter-request>
