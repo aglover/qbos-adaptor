@@ -48,4 +48,22 @@ public class CreateCommandTest {
         verify(qtpThing, times(1)).createRecord(any(Applet.class));
         assertEquals("10000000000", adapterResponse.getData().getText());
     }
+
+    @Test
+    public void testCreateRequestHandleError() throws Exception {
+        PowerMockito.mockStatic(QTP.class);
+        QTP qtpThing = mock(QTP.class);
+        when(QTP.Create("dm2q", "0C4F7501U1143U5955UDC8C1EB43B06C988")).thenThrow(Exception.class);
+        //when(qtpThing.createRecord(any(Applet.class))).thenReturn(new Long(10000000000L));
+        XML xml = XML.read("etc/test-create-req.xml");
+        AdapterRequest request = new AdapterRequest(xml);
+        QbosAdapter adaptor = new QbosAdapter();
+        adaptor.setQtpInstance(qtpThing);
+        AdapterResponse adapterResponse = adaptor.performAction(request);
+        PowerMockito.verifyStatic(Mockito.times(1));
+        QTP.Create("dm2q", "0C4F7501U1143U5955UDC8C1EB43B06C988");
+        assertNotNull("adapterResponse was not null?", adapterResponse);
+        verify(qtpThing, times(0)).createRecord(any(Applet.class));
+        assertEquals("FAILURE", adapterResponse.getData().getText());
+    }
 }
