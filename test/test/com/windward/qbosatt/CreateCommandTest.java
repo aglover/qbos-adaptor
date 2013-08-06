@@ -54,7 +54,6 @@ public class CreateCommandTest {
         PowerMockito.mockStatic(QTP.class);
         QTP qtpThing = mock(QTP.class);
         when(QTP.Create("dm2q", "0C4F7501U1143U5955UDC8C1EB43B06C988")).thenThrow(Exception.class);
-        //when(qtpThing.createRecord(any(Applet.class))).thenReturn(new Long(10000000000L));
         XML xml = XML.read("etc/test-create-req.xml");
         AdapterRequest request = new AdapterRequest(xml);
         QbosAdapter adaptor = new QbosAdapter();
