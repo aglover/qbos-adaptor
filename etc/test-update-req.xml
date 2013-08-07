@@ -6,11 +6,15 @@
     </peer-location>
     <request-action>update</request-action>
     <request-data>
-        <create>
+        <update>
             <qsi>dm2q</qsi>
             <ticket>0C4F7501U1143U5955UDC8C1EB43B06C988</ticket>
             <classId>11614</classId>
             <recordId>69</recordId>
+            <status>9</status>
+            <status_notes>
+                <note>blah</note>
+            </status_notes>
             <request_data>
                 <Server_Platform>Neo2 Consumer DNS</Server_Platform>
                 <Location>Arlington</Location>
@@ -23,6 +27,6 @@
                 <ASB_Catalog_Id>77</ASB_Catalog_Id>
                 <Notes>This is sample add request for the ASB Request App in Windward ITS space.</Notes>
             </request_data>
-        </create>
+        </update>
     </request-data>
 </adapter-request>

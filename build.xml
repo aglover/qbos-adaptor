@@ -28,9 +28,26 @@
 
 
     <target name="jar" depends="test" description="creates jar file for distribution">
-        <jar destfile="${build.dir}/${ant.project.name}-all-${version}.jar">
+        <jar destfile="${build.dir}/${ant.project.name}-${version}.jar">
             <fileset dir="${classes.dir}" includes="**/*.class"/>
         </jar>
+    </target>
+
+    <target name="aroar" depends="jar" description="build a Real Ops archive">
+
+        <mkdir dir="${build.dir}/archive"/>
+        <copy file="lib/com.qbos.QTP-0.02.jar" tofile="${build.dir}/archive/com.qbos.QTP.jar"/>
+        <copy file="${build.dir}/${ant.project.name}-${version}.jar"
+              tofile="${build.dir}/archive/${ant.project.name}-${version}.jar"/>
+        <copy file="conf/config.xml" tofile="${build.dir}/archive/config.xml"/>
+        <replace file="${build.dir}/archive/config.xml">
+            <replacefilter token="@ant.project.name@" value="${ant.project.name}"/>
+            <replacefilter token="@version@" value="${version}"/>
+        </replace>
+
+        <zip destfile="${build.dir}/${ant.project.name}-${version}.aroar"
+             basedir="${build.dir}/archive"
+                />
     </target>
 
 

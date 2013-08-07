@@ -17,11 +17,16 @@ public class UpdateCommand extends AbstractCommand{
     @Override
     public AdapterResponse execute(AdapterRequest adapterRequest) {
         try {
-            XML createXML = adapterRequest.getData();
-            QTP instance = QTP.Create(createXML.getChild("qsi").getText(), createXML.getChild("ticket").getText());
-            Applet applet = new Applet(Long.valueOf(createXML.getChild("classId").getText()),
-                    Long.valueOf(createXML.getChild("recordId").getText()));
-            XML[] children = createXML.getChild("request_data").getChildren();
+            XML updateXML = adapterRequest.getData();
+            QTP instance = QTP.Create(updateXML.getChild("qsi").getText(), updateXML.getChild("ticket").getText());
+            Applet applet = new Applet(Long.valueOf(updateXML.getChild("classId").getText()),
+                    Long.valueOf(updateXML.getChild("recordId").getText()));
+
+            if(updateXML.getChild("status") != null){
+                instance.updateStatus(applet, Long.valueOf(updateXML.getChild("status").getText()), true);
+            }
+
+            XML[] children = updateXML.getChild("request_data").getChildren();
             for(XML element: children){
                 applet.add(element.getElement().getName(), element.getText());
             }

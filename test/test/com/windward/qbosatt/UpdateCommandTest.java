@@ -46,6 +46,26 @@ public class UpdateCommandTest {
     }
 
     @Test
+    public void testUpdateCommandNoAppletData() throws Exception {
+        PowerMockito.mockStatic(QTP.class);
+        QTP qtpThing = mock(QTP.class);
+        when(QTP.Create("dm2q", "0C4F7501U1143U5955UDC8C1EB43B06C988")).thenReturn(qtpThing);
+        when(qtpThing.updateRecord(any(Applet.class))).thenReturn(new Long(10000000000L));
+        when(qtpThing.updateStatus(any(Applet.class), eq(9), eq(true))).thenReturn(new Long(10000000000L));
+        XML xml = XML.read("etc/test-update-opt-req.xml");
+        AdapterRequest request = new AdapterRequest(xml);
+        QbosAdapter adaptor = new QbosAdapter();
+        adaptor.setQtpInstance(qtpThing);
+        AdapterResponse adapterResponse = adaptor.performAction(request);
+        PowerMockito.verifyStatic(Mockito.times(1));
+        QTP.Create("dm2q", "0C4F7501U1143U5955UDC8C1EB43B06C988");
+        assertNotNull("adapterResponse was not null?", adapterResponse);
+        verify(qtpThing, times(1)).updateRecord(any(Applet.class));
+        verify(qtpThing, times(1)).updateStatus(any(Applet.class), eq(9l), eq(true));
+        assertEquals("10000000000", adapterResponse.getData().getText());
+    }
+
+    @Test
     public void testUpdateCommandException() throws Exception {
         PowerMockito.mockStatic(QTP.class);
         QTP qtpThing = mock(QTP.class);

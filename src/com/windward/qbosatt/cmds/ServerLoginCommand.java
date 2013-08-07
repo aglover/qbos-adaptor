@@ -22,7 +22,7 @@ public class ServerLoginCommand extends AbstractCommand {
             XML loginXML = adapterRequest.getData();
             QTP qtp = this.getQtpInstance();
             qtp.logIn(loginXML.getChild("qsi").getText(),
-                    loginXML.getChild("account").getText(),
+                    loginXML.getChild("username").getText(),
                     loginXML.getChild("password").getText());
             String token = qtp.getTicket();
             return new AdapterResponse(300, "QTP ticket: " + token,

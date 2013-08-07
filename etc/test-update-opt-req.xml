@@ -1,0 +1,21 @@
+<adapter-request>
+    <target-adapter>responseAdapter</target-adapter>
+    <peer-location>
+        <location>this</location>
+        <peer-name/>
+    </peer-location>
+    <request-action>update</request-action>
+    <request-data>
+        <update>
+            <qsi>dm2q</qsi>
+            <ticket>0C4F7501U1143U5955UDC8C1EB43B06C988</ticket>
+            <classId>11614</classId>
+            <recordId>69</recordId>
+            <status>9</status>
+            <status_notes>
+                <note>blah</note>
+            </status_notes>
+            <request_data/>
+        </update>
+    </request-data>
+</adapter-request>

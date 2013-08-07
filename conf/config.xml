@@ -1,0 +1,8 @@
+<adapter-metadata>
+    <description></description>
+    <class-name>com.windward.qbosatt.QbosAdapter</class-name>
+    <adapter-jar>@ant.project.name@-@version@.jar</adapter-jar>
+    <required-jars>
+        <required-jar>com.qbos.QTP.jar</required-jar>
+    </required-jars>
+</adapter-metadata>
