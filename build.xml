@@ -40,7 +40,7 @@
 
         <mkdir dir="${build.dir}/archive/${ant.project.name}-${version}"/>
 
-        <copy file="lib/com.qbos.QTP-0.02.jar" tofile="${build.dir}/archive/${ant.project.name}-${version}/com.qbos.QTP.jar"/>
+        <copy file="lib/com.qbos.QTP-0.75.jar" tofile="${build.dir}/archive/${ant.project.name}-${version}/com.qbos.QTP.jar"/>
         <copy file="lib/commons-lang-2.3.jar" tofile="${build.dir}/archive/${ant.project.name}-${version}/commons-lang-2.3.jar"/>
         <copy file="${build.dir}/${ant.project.name}-${version}.jar"
               tofile="${build.dir}/archive/${ant.project.name}-${version}/${ant.project.name}-${version}.jar"/>
