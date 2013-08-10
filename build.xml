@@ -1,6 +1,6 @@
 <project name="qbos-adapter" basedir="." default="jar">
 
-    <property name="version" value="0.7"/>
+    <property name="version" value="0.8"/>
     <property name="lib.dir" value="lib"/>
     <property name="build.dir" value="target"/>
     <property name="build.test.dir" value="${build.dir}/test"/>
@@ -36,18 +36,28 @@
     <target name="aroar" depends="jar" description="build a Real Ops archive">
 
         <mkdir dir="${build.dir}/archive"/>
-        <copy file="lib/com.qbos.QTP-0.02.jar" tofile="${build.dir}/archive/com.qbos.QTP.jar"/>
+        <mkdir dir="${build.dir}/archive/META-INF"/>
+
+        <mkdir dir="${build.dir}/archive/${ant.project.name}-${version}"/>
+
+        <copy file="lib/com.qbos.QTP-0.02.jar" tofile="${build.dir}/archive/${ant.project.name}-${version}/com.qbos.QTP.jar"/>
+        <copy file="lib/commons-lang-2.3.jar" tofile="${build.dir}/archive/${ant.project.name}-${version}/commons-lang-2.3.jar"/>
         <copy file="${build.dir}/${ant.project.name}-${version}.jar"
-              tofile="${build.dir}/archive/${ant.project.name}-${version}.jar"/>
-        <copy file="conf/config.xml" tofile="${build.dir}/archive/config.xml"/>
-        <replace file="${build.dir}/archive/config.xml">
+              tofile="${build.dir}/archive/${ant.project.name}-${version}/${ant.project.name}-${version}.jar"/>
+        <copy file="conf/config.xml" tofile="${build.dir}/archive/${ant.project.name}-${version}/config.xml"/>
+        <replace file="${build.dir}/archive/${ant.project.name}-${version}/config.xml">
+            <replacefilter token="@ant.project.name@" value="${ant.project.name}"/>
+            <replacefilter token="@version@" value="${version}"/>
+        </replace>
+
+        <copy file="conf/MANIFEST.MF" tofile="${build.dir}/archive/META-INF/MANIFEST.MF"/>
+        <replace file="${build.dir}/archive/META-INF/MANIFEST.MF">
             <replacefilter token="@ant.project.name@" value="${ant.project.name}"/>
             <replacefilter token="@version@" value="${version}"/>
         </replace>
 
         <zip destfile="${build.dir}/${ant.project.name}-${version}.aroar"
-             basedir="${build.dir}/archive"
-                />
+             basedir="${build.dir}/archive"/>
     </target>
 
 
