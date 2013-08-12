@@ -47,9 +47,7 @@
         <copy file="lib/com.springsource.org.apache.axis-1.4.0.jar" tofile="${aroar.dir}/com.springsource.org.apache.axis-1.4.0.jar"/>
         <copy file="lib/joda-time-2.2.jar" tofile="${aroar.dir}/joda-time-2.2.jar"/>
         <copy file="lib/axis-jaxrpc-1.4.jar" tofile="${aroar.dir}/axis-jaxrpc-1.4.jar"/>
-
         <!-- Consider doing a com.springsource.* here? -->
-        <!-- also consider making a property of ${aroar.dir} -->
         <copy file="lib/com.springsource.javax.activation-1.1.1.jar" tofile="${aroar.dir}/com.springsource.javax.activation-1.1.1.jar"/>
         <copy file="lib/com.springsource.javax.jms-1.1.0.jar" tofile="${aroar.dir}/com.springsource.javax.jms-1.1.0.jar"/>
         <copy file="lib/com.springsource.javax.mail-1.4.5.jar" tofile="${aroar.dir}/com.springsource.javax.mail-1.4.5.jar"/>
