@@ -42,6 +42,10 @@
 
         <copy file="lib/com.qbos.QTP-0.75.jar" tofile="${build.dir}/archive/${ant.project.name}-${version}/com.qbos.QTP.jar"/>
         <copy file="lib/commons-lang-2.3.jar" tofile="${build.dir}/archive/${ant.project.name}-${version}/commons-lang-2.3.jar"/>
+        <copy file="lib/json-simple-1.1.1.jar" tofile="${build.dir}/archive/${ant.project.name}-${version}/json-simple-1.1.1.jar"/>
+        <copy file="lib/com.springsource.org.apache.axis-1.4.0.jar" tofile="${build.dir}/archive/${ant.project.name}-${version}/com.springsource.org.apache.axis-1.4.0.jar"/>
+        <copy file="lib/joda-time-2.2.jar" tofile="${build.dir}/archive/${ant.project.name}-${version}/joda-time-2.2.jar"/>
+        <copy file="lib/axis-jaxrpc-1.4.jar" tofile="${build.dir}/archive/${ant.project.name}-${version}/axis-jaxrpc-1.4.jar"/>
         <copy file="${build.dir}/${ant.project.name}-${version}.jar"
               tofile="${build.dir}/archive/${ant.project.name}-${version}/${ant.project.name}-${version}.jar"/>
         <copy file="conf/config.xml" tofile="${build.dir}/archive/${ant.project.name}-${version}/config.xml"/>
