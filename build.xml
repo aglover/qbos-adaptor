@@ -1,6 +1,6 @@
 <project name="qbos-adapter" basedir="." default="jar">
 
-    <property name="version" value="0.8.1"/>
+    <property name="version" value="0.8.2"/>
     <property name="lib.dir" value="lib"/>
     <property name="build.dir" value="target"/>
     <property name="build.test.dir" value="${build.dir}/test"/>
@@ -71,7 +71,7 @@
             <replacefilter token="@version@" value="${version}"/>
         </replace>
 
-        <zip destfile="${build.dir}/${ant.project.name}_${version}.aroar"
+        <jar destfile="${build.dir}/${ant.project.name}_${version}.aroar"
              basedir="${build.dir}/archive"/>
     </target>
 
