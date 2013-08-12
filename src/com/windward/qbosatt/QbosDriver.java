@@ -20,8 +20,8 @@ public class QbosDriver {
         System.out.println("done w/login");
         String token = qtp.getTicket();
         System.out.println("ticket is: " + token);
-        String ql = "Select  from <<610858.APPCAT>>;";
-        System.out.println("about to query");
+        String ql = "Select  RecordId,  Role, Install_Order_No, Type, Vendor, Name, Architecture, Version, Build, Release from <<610858.APPCAT>>;";
+        System.out.println("about to query" );
         QuillDataTable dt = qtp.query(ql);
         System.out.println(dt.getRecordCount());
         for(Map<String,String> row : dt){
