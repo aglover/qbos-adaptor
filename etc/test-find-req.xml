@@ -1,0 +1,16 @@
+<adapter-request>
+    <target-adapter>responseAdapter</target-adapter>
+    <peer-location>
+        <location>this</location>
+        <peer-name/>
+    </peer-location>
+    <request-action>find</request-action>
+    <request-data>
+        <create>
+            <qsi>dm2q</qsi>
+            <ticket>0C4F7501U1143U5955UDC8C1EB43B06C988</ticket>
+            <query>Select  from &lt;&lt;635138.OS&gt;&gt;</query>
+            <query1>Select RecordId,  Role, Install_Order_No, Type, Vendor, Name, Architecture, Version, Build, Release from &lt;&lt;610858.APPCAT&gt;&gt;</query1>
+        </create>
+    </request-data>
+</adapter-request>

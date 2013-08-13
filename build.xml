@@ -1,6 +1,6 @@
 <project name="qbos-adapter" basedir="." default="jar">
 
-    <property name="version" value="0.8.2"/>
+    <property name="version" value="0.8.3"/>
     <property name="lib.dir" value="lib"/>
     <property name="build.dir" value="target"/>
     <property name="build.test.dir" value="${build.dir}/test"/>
@@ -97,6 +97,7 @@
                 <pathelement path="${build.dir}/test-classes"/>
             </classpath>
             <formatter type="xml"/>
+            <formatter type="plain" usefile="false" />
             <batchtest fork="yes" todir="./${build.dir}/">
                 <fileset dir="test/">
                     <include name="**/*Test.java"/>
