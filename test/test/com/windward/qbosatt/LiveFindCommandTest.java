@@ -27,22 +27,15 @@ import static org.mockito.Mockito.*;
  * Date: 8/4/13
  * Time: 8:21 PM
  */
-public class FindCommandTest {
+public class LiveFindCommandTest extends LiveQbosAdapterTest{
 
     @Test
     public void testFindCommand() throws Exception {
-        XML xml = XML.read("etc/test-login-req.xml");
-        AdapterRequest request = new AdapterRequest(xml);
-        QbosAdapter adaptor = new QbosAdapter();
-        AdapterResponse adapterResponse = adaptor.performAction(request);
-        String ticket = adapterResponse.getData().getText();
-//        System.out.println("Got ticket: "+ticket);
 
-        xml = XML.read("etc/test-find-req.xml");
-        xml.getChild("request-data").getChild("create").getChild("ticket").setText(ticket);
-        request = new AdapterRequest(xml);
-        adapterResponse = adaptor.performAction(request);
-//        System.out.println(adapterResponse.getData().toPrettyString());
+        XML xml = this.loginAndLoadXML("etc/test-find-req.xml");
+        QbosAdapter adapter = new QbosAdapter();
+        AdapterRequest request = new AdapterRequest(xml);
+        AdapterResponse adapterResponse = adapter.performAction(request);
         assertNotNull("adapterResponse was not null?", adapterResponse);
         String count = adapterResponse.getData().getChild("count").getText();
         assertTrue(Integer.parseInt(count) > 2);

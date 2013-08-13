@@ -13,6 +13,7 @@ import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
+import java.lang.Exception;
 import java.lang.System;
 
 import static org.junit.Assert.assertEquals;
@@ -27,16 +28,26 @@ import static org.mockito.Mockito.*;
  * Date: 8/4/13
  * Time: 8:21 PM
  */
-public class QBosLiveAdapterTest {
+public class LiveQbosAdapterTest {
 
-    @Test
-    public void testFindCommand() throws Exception {
+    public String getTicket() throws Exception {
         XML xml = XML.read("etc/test-login-req.xml");
         AdapterRequest request = new AdapterRequest(xml);
         QbosAdapter adaptor = new QbosAdapter();
         AdapterResponse adapterResponse = adaptor.performAction(request);
-        String ticket = adapterResponse.getData().getText();
-        assertNotNull("adapterResponse was not null?", adapterResponse);
-        assertNotNull("token was not null?", adapterResponse.getData().getText());
+        return adapterResponse.getData().getText();
+    }
+
+    public XML loginAndLoadXML(String filePath) throws Exception {
+        String ticket = this.getTicket();
+        XML xml = XML.read(filePath);
+        xml.getChild("request-data").getChild("create").getChild("ticket").setText(ticket);
+        return xml;
+    }
+
+    @Test
+    public void testLogin() throws Exception {
+        String ticket = this.getTicket();
+        assertNotNull("token was not null?", ticket);
     }
 }
