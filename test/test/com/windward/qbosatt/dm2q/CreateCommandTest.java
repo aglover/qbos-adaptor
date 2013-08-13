@@ -1,4 +1,4 @@
-package test.com.windward.qbosatt;
+package test.com.windward.qbosatt.dm2q;
 
 import com.realops.common.xml.XML;
 import com.realops.foundation.adapterframework.AdapterRequest;
@@ -14,19 +14,19 @@ import static org.junit.Assert.assertNotNull;
  * Date: 8/2/13
  * Time: 8:58 AM
  */
-public class LiveCreateCommandTest extends LiveQbosAdapterTest{
+public class CreateCommandTest extends QbosAdapterTest{
 
     @Test
     public void testCreateRequest() throws Exception {
-        XML xml = this.loginAndLoadXML("etc/test-create-req.xml");
+        XML xml = this.loginAndLoadXML("etc/dm2q/test-create-req.xml");
         AdapterRequest request = new AdapterRequest(xml);
         QbosAdapter adaptor = new QbosAdapter();
         AdapterResponse adapterResponse = adaptor.performAction(request);
 
         assertNotNull("adapterResponse was not null?", adapterResponse);
-        System.out.println(adapterResponse.getExecutionStatus().toString());
-        System.out.println(adapterResponse.getMessage().toString());
-        System.out.println(adapterResponse.getData().toPrettyString());
+//        System.out.println(adapterResponse.getExecutionStatus().toString());
+//        System.out.println(adapterResponse.getMessage().toString());
+//        System.out.println(adapterResponse.getData().toPrettyString());
     }
 
 }

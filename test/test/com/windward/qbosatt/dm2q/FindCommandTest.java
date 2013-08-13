@@ -1,4 +1,4 @@
-package test.com.windward.qbosatt;
+package test.com.windward.qbosatt.dm2q;
 
 import com.qbos.QTP.Applet;
 import com.qbos.QTP.QTP;
@@ -13,7 +13,6 @@ import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
-import java.lang.Exception;
 import java.lang.System;
 
 import static org.junit.Assert.assertEquals;
@@ -28,26 +27,18 @@ import static org.mockito.Mockito.*;
  * Date: 8/4/13
  * Time: 8:21 PM
  */
-public class LiveQbosAdapterTest {
-
-    public String getTicket() throws Exception {
-        XML xml = XML.read("etc/test-login-req.xml");
-        AdapterRequest request = new AdapterRequest(xml);
-        QbosAdapter adaptor = new QbosAdapter();
-        AdapterResponse adapterResponse = adaptor.performAction(request);
-        return adapterResponse.getData().getText();
-    }
-
-    public XML loginAndLoadXML(String filePath) throws Exception {
-        String ticket = this.getTicket();
-        XML xml = XML.read(filePath);
-        xml.getChild("request-data").getChild("create").getChild("ticket").setText(ticket);
-        return xml;
-    }
+public class FindCommandTest extends QbosAdapterTest{
 
     @Test
-    public void testLogin() throws Exception {
-        String ticket = this.getTicket();
-        assertNotNull("token was not null?", ticket);
+    public void testFindCommand() throws Exception {
+
+        XML xml = this.loginAndLoadXML("etc/dm2q/test-find-req.xml");
+        QbosAdapter adapter = new QbosAdapter();
+        AdapterRequest request = new AdapterRequest(xml);
+        AdapterResponse adapterResponse = adapter.performAction(request);
+        assertNotNull("adapterResponse was not null?", adapterResponse);
+        String count = adapterResponse.getData().getChild("count").getText();
+        assertTrue(Integer.parseInt(count) > 2);
+        assertTrue(adapterResponse.getData().getChild("rows").hasChildren());
     }
 }
