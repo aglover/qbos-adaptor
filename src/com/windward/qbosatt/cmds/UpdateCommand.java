@@ -25,6 +25,12 @@ public class UpdateCommand extends AbstractCommand{
             if(updateXML.getChild("status") != null){
                 instance.updateStatus(applet, Long.valueOf(updateXML.getChild("status").getText()), true);
             }
+            XML notes = updateXML.getChild("notes");
+            if (notes !=null ){
+                for (XML note: notes.getChildren()){
+                    instance.addNote(applet, note.getText());
+                }
+            }
 
             XML[] children = updateXML.getChild("request_data").getChildren();
             for(XML element: children){

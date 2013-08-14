@@ -23,18 +23,18 @@ public class FindCommand extends AbstractCommand {
             XML queryXML = adapterRequest.getData();
             QTP instance = QTP.Create(queryXML.getChild("qsi").getText(), queryXML.getChild("ticket").getText());
             QuillDataTable dataTable = instance.query(queryXML.getChild("query").getText());
-            XML rows = new XML("rows");
+            XML items = new XML("items");
 
             for(Map<String,String> row : dataTable){
-                XML xmlRow = new XML("row");
+                XML item = new XML("item");
                 for(String key : row.keySet()){
-                    xmlRow.addChild(key).setText(row.get(key));
+                    item.addChild(key).setText(row.get(key));
                 }
-                rows.addChild(xmlRow);
+                items.addChild(item);
             }
             XML response = new XML("response");
             response.addChild("count").setText(Long.toString(dataTable.getRecordCount()));
-            response.addChild(rows);
+            response.addChild(items);
             return new AdapterResponse(300, "QTP Create successful: " ,
                     response, Status.SUCCESS);
         } catch (Exception e) {

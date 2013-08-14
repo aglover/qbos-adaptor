@@ -41,7 +41,7 @@ public class QbosAdapterTest {
     public XML loginAndLoadXML(String filePath) throws Exception {
         String ticket = this.getTicket();
         XML xml = XML.read(filePath);
-        xml.getChild("request-data").getChild("create").getChild("ticket").setText(ticket);
+        xml.selectNodeByXPath("//ticket").setText(ticket);
         return xml;
     }
 

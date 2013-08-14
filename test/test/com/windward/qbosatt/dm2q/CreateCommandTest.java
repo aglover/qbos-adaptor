@@ -7,6 +7,7 @@ import com.windward.qbosatt.QbosAdapter;
 import org.junit.Test;
 
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Created with IntelliJ IDEA.
@@ -27,6 +28,9 @@ public class CreateCommandTest extends QbosAdapterTest{
 //        System.out.println(adapterResponse.getExecutionStatus().toString());
 //        System.out.println(adapterResponse.getMessage().toString());
 //        System.out.println(adapterResponse.getData().toPrettyString());
+
+        assertNotNull("item not null?", adapterResponse.getData());
+        assertTrue("id was set", adapterResponse.getData().getText().length()>0);
     }
 
 }

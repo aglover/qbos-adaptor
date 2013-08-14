@@ -19,17 +19,16 @@ public class CreateCommand extends AbstractCommand {
         try {
             XML createXML = adapterRequest.getData();
             QTP instance = QTP.Create(createXML.getChild("qsi").getText(), createXML.getChild("ticket").getText());
-            Applet applet = new Applet(Long.valueOf(createXML.getChild("classId").getText()));
-            XML[] children = createXML.getChild("request_data").getChildren();
-            for(XML element: children){
-                applet.add(element.getElement().getName(), element.getText());
+            Applet applet = new Applet(Long.valueOf(createXML.getChild("class-id").getText()));
+
+            for (XML field: createXML.getChild("item").getChildren()){
+                applet.add(field.getName(), field.getText());
             }
             long recordId = instance.createRecord(applet);
             return new AdapterResponse(300, "QTP Create successful: " + recordId,
                     new XML("response").setText(Long.toString(recordId)), Status.SUCCESS);
         } catch (Exception e) {
             return exceptionResponse(e);
-
         }
     }
 
