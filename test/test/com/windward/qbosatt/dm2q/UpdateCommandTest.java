@@ -23,9 +23,9 @@ public class UpdateCommandTest extends QbosAdapterTest {
         AdapterResponse adapterResponse = adaptor.performAction(request);
 
         assertNotNull("adapterResponse was not null?", adapterResponse);
-        System.out.println(adapterResponse.getExecutionStatus().toString());
-        System.out.println(adapterResponse.getMessage().toString());
-        System.out.println(adapterResponse.getData().toPrettyString());
+//        System.out.println(adapterResponse.getExecutionStatus().toString());
+//        System.out.println(adapterResponse.getMessage().toString());
+//        System.out.println(adapterResponse.getData().toPrettyString());
 
     }
 }

@@ -1,6 +1,6 @@
 <project name="qbos-adapter" basedir="." default="jar">
 
-    <property name="version" value="0.8.3"/>
+    <property name="version" value="0.8.5"/>
     <property name="lib.dir" value="lib"/>
     <property name="build.dir" value="target"/>
     <property name="build.test.dir" value="${build.dir}/test"/>
@@ -73,6 +73,7 @@
         </replace>
 
         <jar destfile="${build.dir}/${ant.project.name}_${version}.aroar"
+             manifest="${build.dir}/archive/META-INF/MANIFEST.MF"
              basedir="${build.dir}/archive"/>
     </target>
 
