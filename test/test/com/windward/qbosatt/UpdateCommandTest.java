@@ -2,6 +2,7 @@ package test.com.windward.qbosatt;
 
 import com.qbos.QTP.Applet;
 import com.qbos.QTP.QTP;
+import com.realops.common.enumeration.Status;
 import com.realops.common.xml.XML;
 import com.realops.foundation.adapterframework.AdapterRequest;
 import com.realops.foundation.adapterframework.AdapterResponse;
@@ -15,6 +16,7 @@ import org.powermock.modules.junit4.PowerMockRunner;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
 
@@ -42,7 +44,7 @@ public class UpdateCommandTest {
         QTP.Create("dm2q", "0C4F7501U1143U5955UDC8C1EB43B06C988");
         assertNotNull("adapterResponse was not null?", adapterResponse);
         verify(qtpThing, times(1)).updateRecord(any(Applet.class));
-        assertEquals("10000000000", adapterResponse.getData().getText());
+        assertTrue("Adapter was successful", adapterResponse.getExecutionStatus()== Status.SUCCESS);
     }
 
     @Test
@@ -52,6 +54,7 @@ public class UpdateCommandTest {
         when(QTP.Create("dm2q", "0C4F7501U1143U5955UDC8C1EB43B06C988")).thenReturn(qtpThing);
         when(qtpThing.updateRecord(any(Applet.class))).thenReturn(new Long(10000000000L));
         when(qtpThing.updateStatus(any(Applet.class), eq(9), eq(true))).thenReturn(new Long(10000000000L));
+        when(qtpThing.addNote(any(Applet.class), any(String.class))).thenReturn(new Long(10000000000L));
         XML xml = XML.read("etc/test-update-opt-req.xml");
         AdapterRequest request = new AdapterRequest(xml);
         QbosAdapter adaptor = new QbosAdapter();
@@ -60,9 +63,10 @@ public class UpdateCommandTest {
         PowerMockito.verifyStatic(Mockito.times(1));
         QTP.Create("dm2q", "0C4F7501U1143U5955UDC8C1EB43B06C988");
         assertNotNull("adapterResponse was not null?", adapterResponse);
-        verify(qtpThing, times(1)).updateRecord(any(Applet.class));
+        verify(qtpThing, times(0)).updateRecord(any(Applet.class));
         verify(qtpThing, times(1)).updateStatus(any(Applet.class), eq(9l), eq(true));
-        assertEquals("10000000000", adapterResponse.getData().getText());
+        verify(qtpThing, times(1)).addNote(any(Applet.class), any(String.class));
+        assertTrue("Adapter was successful", adapterResponse.getExecutionStatus()== Status.SUCCESS);
     }
 
     @Test

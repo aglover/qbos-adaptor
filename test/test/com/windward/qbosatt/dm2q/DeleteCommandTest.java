@@ -16,10 +16,10 @@ import static org.junit.Assert.assertTrue;
  * Date: 8/4/13
  * Time: 8:16 PM
  */
-public class UpdateCommandTest extends QbosAdapterTest {
+public class DeleteCommandTest extends QbosAdapterTest {
     @Test
-    public void testUpdateCommand() throws Exception {
-        XML xml = this.loginAndLoadXML("etc/dm2q/test-update-req.xml");
+    public void testCommand() throws Exception {
+        XML xml = this.loginAndLoadXML("etc/dm2q/test-delete-req.xml");
         AdapterRequest request = new AdapterRequest(xml);
         QbosAdapter adaptor = new QbosAdapter();
         AdapterResponse adapterResponse = adaptor.performAction(request);

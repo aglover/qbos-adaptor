@@ -18,9 +18,9 @@ public class UpdateCommand extends AbstractCommand{
     public AdapterResponse execute(AdapterRequest adapterRequest) {
         try {
             XML updateXML = adapterRequest.getData();
+            long recordId = Long.valueOf(updateXML.getChild("record-id").getText());
             QTP instance = QTP.Create(updateXML.getChild("qsi").getText(), updateXML.getChild("ticket").getText());
-            Applet applet = new Applet(Long.valueOf(updateXML.getChild("classId").getText()),
-                    Long.valueOf(updateXML.getChild("recordId").getText()));
+            Applet applet = new Applet(Long.valueOf(updateXML.getChild("class-id").getText()),recordId);
 
             if(updateXML.getChild("status") != null){
                 instance.updateStatus(applet, Long.valueOf(updateXML.getChild("status").getText()), true);
@@ -31,12 +31,13 @@ public class UpdateCommand extends AbstractCommand{
                     instance.addNote(applet, note.getText());
                 }
             }
-
-            XML[] children = updateXML.getChild("request_data").getChildren();
-            for(XML element: children){
-                applet.add(element.getElement().getName(), element.getText());
+            XML item = updateXML.getChild("item");
+            if (item!=null && item.hasChildren()){
+                for(XML element: item.getChildren()){
+                    applet.add(element.getElement().getName(), element.getText());
+                }
+                instance.updateRecord(applet);
             }
-            long recordId = instance.updateRecord(applet);
             return new AdapterResponse(300, "QTP Update successful: " + recordId,
                     new XML("response").setText(Long.toString(recordId)), Status.SUCCESS);
         } catch (Exception e) {

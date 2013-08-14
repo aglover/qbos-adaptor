@@ -9,19 +9,19 @@
         <update>
             <qsi>dm2q</qsi>
             <ticket>0C4F7501U1143U5955UDC8C1EB43B06C988</ticket>
-            <classId>11607</classId>
-            <recordId>9</recordId>
-            <status1>9</status1>
+            <class-id>11607</class-id>
+            <record-id>9</record-id>
+            <status>4968</status>
             <notes>
                 <note>blah</note>
             </notes>
-            <request_data>
+            <item>
                 <Server_Platform>Neo2 Consumer DNS</Server_Platform>
                 <Location>Broadway</Location>
                 <OS_Name>SUSE</OS_Name>
                 <OS_Version>12.1</OS_Version>
                 <RAM>28MB</RAM>
-            </request_data>
+            </item>
         </update>
     </request-data>
 </adapter-request>

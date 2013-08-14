@@ -9,13 +9,13 @@
         <update>
             <qsi>dm2q</qsi>
             <ticket>0C4F7501U1143U5955UDC8C1EB43B06C988</ticket>
-            <classId>11614</classId>
-            <recordId>69</recordId>
+            <class-id>11614</class-id>
+            <record-id>69</record-id>
             <status>9</status>
-            <status_notes>
+            <notes>
                 <note>blah</note>
-            </status_notes>
-            <request_data/>
+            </notes>
+            <item/>
         </update>
     </request-data>
 </adapter-request>
