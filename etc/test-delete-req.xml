@@ -9,8 +9,8 @@
         <create>
             <qsi>dm2q</qsi>
             <ticket>0C4F7501U1143U5955UDC8C1EB43B06C988</ticket>
-            <class-id>11607</class-id>
-            <record-id>69</record-id>
+            <class>11607</class>
+            <record>69</record>
         </create>
     </request-data>
 </adapter-request>

@@ -18,23 +18,24 @@ public class UpdateCommand extends AbstractCommand{
     public AdapterResponse execute(AdapterRequest adapterRequest) {
         try {
             XML updateXML = adapterRequest.getData();
-            long recordId = Long.valueOf(updateXML.getChild("record-id").getText());
+            XML item = updateXML.getChild("item");
+            long recordId = Long.valueOf(item.getChild("record").getText());
             QTP instance = QTP.Create(updateXML.getChild("qsi").getText(), updateXML.getChild("ticket").getText());
-            Applet applet = new Applet(Long.valueOf(updateXML.getChild("class-id").getText()),recordId);
+            Applet applet = new Applet(Long.valueOf(updateXML.getChild("class").getText()),recordId);
 
-            if(updateXML.getChild("status") != null){
-                instance.updateStatus(applet, Long.valueOf(updateXML.getChild("status").getText()), true);
+            if(item.getChild("status") != null){
+                instance.updateStatus(applet, Long.valueOf(item.getChild("status").getText()), true);
             }
-            XML notes = updateXML.getChild("notes");
+            XML notes = item.getChild("notes");
             if (notes !=null ){
                 for (XML note: notes.getChildren()){
                     instance.addNote(applet, note.getText());
                 }
             }
-            XML item = updateXML.getChild("item");
-            if (item!=null && item.hasChildren()){
-                for(XML element: item.getChildren()){
-                    applet.add(element.getElement().getName(), element.getText());
+            XML fields = item.getChild("fields");
+            if (fields!=null && fields.hasChildren()){
+                for(XML field: fields.getChildren()){
+                    applet.add(field.getElement().getName(), field.getText());
                 }
                 instance.updateRecord(applet);
             }

@@ -30,7 +30,10 @@ public class CreateCommandTest extends QbosAdapterTest{
 //        System.out.println(adapterResponse.getData().toPrettyString());
 
         assertNotNull("item not null?", adapterResponse.getData());
-        assertTrue("id was set", adapterResponse.getData().getText().length()>0);
+        String idString = adapterResponse.getData().getText();
+        assertNotNull("id was null?", idString);
+        assertTrue("id was set?", idString.length()>0);
+        assertTrue("id greater than zero?", Long.parseLong(idString)>0);
     }
 
 }

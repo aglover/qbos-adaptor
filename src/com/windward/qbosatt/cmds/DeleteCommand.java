@@ -19,8 +19,8 @@ public class DeleteCommand extends AbstractCommand {
         try {
             XML createXML = adapterRequest.getData();
             QTP instance = QTP.Create(createXML.getChild("qsi").getText(), createXML.getChild("ticket").getText());
-            Applet applet = new Applet(Long.valueOf(createXML.getChild("class-id").getText()),
-                    Long.valueOf(createXML.getChild("record-id").getText()));
+            Applet applet = new Applet(Long.valueOf(createXML.getChild("class").getText()),
+                    Long.valueOf(createXML.getChild("record").getText()));
             long recordId = instance.deleteRecord(applet);
             return new AdapterResponse(300, "QTP Delete successful: " + recordId,
                     new XML("response").setText(Long.toString(recordId)), Status.SUCCESS);

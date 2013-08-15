@@ -19,9 +19,9 @@ public class CreateCommand extends AbstractCommand {
         try {
             XML createXML = adapterRequest.getData();
             QTP instance = QTP.Create(createXML.getChild("qsi").getText(), createXML.getChild("ticket").getText());
-            Applet applet = new Applet(Long.valueOf(createXML.getChild("class-id").getText()));
+            Applet applet = new Applet(Long.valueOf(createXML.getChild("class").getText()));
 
-            for (XML field: createXML.getChild("item").getChildren()){
+            for (XML field: createXML.getChild("fields").getChildren()){
                 applet.add(field.getName(), field.getText());
             }
             long recordId = instance.createRecord(applet);

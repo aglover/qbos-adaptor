@@ -9,15 +9,15 @@
       <create>
         <qsi>dm2q</qsi>
         <ticket>0C4F7501U1143U5955UDC8C1EB43B06C988</ticket>
-        <class-id>11607</class-id>
-           <item>
+        <class>11607</class>
+           <fields>
                <Server_Platform>Neo2 Consumer DNS</Server_Platform>
                <Location>Arlington</Location>
                <OS_Name>Red Hat</OS_Name>
                <OS_Version>12.1</OS_Version>
                <OS_Name>pxedemo</OS_Name>
                <RAM>12GB</RAM>
-           </item>
+           </fields>
         </create>
     </request-data>
 </adapter-request>
