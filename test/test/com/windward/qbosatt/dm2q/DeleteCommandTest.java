@@ -7,6 +7,7 @@ import com.realops.foundation.adapterframework.AdapterResponse;
 import com.windward.qbosatt.QbosAdapter;
 import org.junit.Test;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
@@ -25,7 +26,6 @@ public class DeleteCommandTest extends QbosAdapterTest {
         AdapterResponse adapterResponse = adaptor.performAction(request);
 
         assertNotNull("adapterResponse was not null?", adapterResponse);
-        assertTrue("Adaptor was successful?", adapterResponse.getExecutionStatus()== Status.SUCCESS);
-
+        assertEquals(Status.SUCCESS.toString(), adapterResponse.getData().getChild("status").getText());
     }
 }

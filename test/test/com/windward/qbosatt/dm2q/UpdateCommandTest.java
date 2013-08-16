@@ -7,6 +7,7 @@ import com.realops.foundation.adapterframework.AdapterResponse;
 import com.windward.qbosatt.QbosAdapter;
 import org.junit.Test;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
@@ -25,6 +26,11 @@ public class UpdateCommandTest extends QbosAdapterTest {
         AdapterResponse adapterResponse = adaptor.performAction(request);
 
         assertNotNull("adapterResponse was not null?", adapterResponse);
-        assertTrue("Adaptor was successful?", adapterResponse.getExecutionStatus()== Status.SUCCESS);
+        assertEquals("Adaptor was successful?", Status.SUCCESS.toString(), adapterResponse.getData().getChild("status").getText());
+
+        String idString = adapterResponse.getData().getChild("data").getText();
+        assertNotNull("id was null?", idString);
+        assertTrue("id was set?", idString.length()>0);
+        assertTrue("id greater than zero?", Long.parseLong(idString)>0);
     }
 }
