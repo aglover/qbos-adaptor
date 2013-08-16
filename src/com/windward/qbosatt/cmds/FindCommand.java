@@ -2,10 +2,7 @@ package com.windward.qbosatt.cmds;
 
 import com.qbos.QTP.QTP;
 import com.qbos.QTP.QuillDataTable;
-import com.realops.common.enumeration.Status;
 import com.realops.common.xml.XML;
-import com.realops.foundation.adapterframework.AdapterRequest;
-import com.realops.foundation.adapterframework.AdapterResponse;
 
 import java.util.Map;
 
