@@ -12,15 +12,10 @@ import com.realops.foundation.adapterframework.AdapterResponse;
  * Date: 8/4/13
  * Time: 8:28 PM
  */
-public class PingCommand extends AbstractCommand{
+public class PingCommand extends AbstractCommand {
     @Override
-    public AdapterResponse execute(AdapterRequest adapterRequest) {
-        try {
-            boolean status = this.getQtpInstance().ping();
-            return new AdapterResponse(300, "QTP status: " + status,
-                    new XML("response").setText(Boolean.toString(status)), Status.SUCCESS);
-        } catch (Exception e) {
-            return exceptionResponse(e);
-        }
+    public XML executeCommand(AdapterRequest adapterRequest) throws Exception {
+        boolean status = this.getQtpInstance().ping();
+        return new XML("data").setText(Boolean.toString(status));
     }
 }

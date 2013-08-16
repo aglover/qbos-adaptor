@@ -37,7 +37,7 @@ public class PingCommandTest {
         assertNotNull("adapterResponse was not null?", adapterResponse);
         verify(qtpThing, times(1)).ping();
 
-        assertEquals("true", adapterResponse.getData().getText());
+        assertEquals("true", adapterResponse.getData().getChild("data").getText());
     }
 
     @Test
@@ -52,6 +52,6 @@ public class PingCommandTest {
         assertNotNull("adapterResponse was not null?", adapterResponse);
         verify(qtpThing, times(1)).ping();
 
-        assertEquals("false", adapterResponse.getData().getText());
+        assertEquals("false", adapterResponse.getData().getChild("data").getText());
     }
 }
