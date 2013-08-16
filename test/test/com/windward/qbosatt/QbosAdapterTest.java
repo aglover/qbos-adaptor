@@ -2,6 +2,7 @@ package test.com.windward.qbosatt;
 
 import com.qbos.QTP.QTP;
 import com.qbos.QTP.UnknownQtpException;
+import com.realops.common.enumeration.Status;
 import com.realops.common.xml.InvalidXMLFormatException;
 import com.realops.common.xml.XML;
 import com.realops.foundation.adapterframework.AdapterRequest;
@@ -35,7 +36,8 @@ public class QbosAdapterTest {
         assertNotNull("adapterResponse was not null?", adapterResponse);
         verify(qtpThing, times(1)).logIn("dm2q", "cdale@windwardits.com", "Rilda411");
 
-        assertEquals("test-ticket", adapterResponse.getData().getText());
+        assertEquals("test-ticket", adapterResponse.getData().getChild("data").getText());
+        assertEquals(Status.ERROR.toString(), adapterResponse.getData().getChild("status").getText());
     }
 
     @Test
