@@ -25,12 +25,9 @@ public class CreateCommandTest extends QbosAdapterTest{
         AdapterResponse adapterResponse = adaptor.performAction(request);
 
         assertNotNull("adapterResponse was not null?", adapterResponse);
-//        System.out.println(adapterResponse.getExecutionStatus().toString());
-//        System.out.println(adapterResponse.getMessage().toString());
-//        System.out.println(adapterResponse.getData().toPrettyString());
 
         assertNotNull("item not null?", adapterResponse.getData());
-        String idString = adapterResponse.getData().getText();
+        String idString = adapterResponse.getData().getChild("data").getText();
         assertNotNull("id was null?", idString);
         assertTrue("id was set?", idString.length()>0);
         assertTrue("id greater than zero?", Long.parseLong(idString)>0);

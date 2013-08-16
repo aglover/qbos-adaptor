@@ -37,10 +37,11 @@ public class FindCommandTest extends QbosAdapterTest{
         AdapterRequest request = new AdapterRequest(xml);
         AdapterResponse adapterResponse = adapter.performAction(request);
         assertNotNull("adapterResponse was not null?", adapterResponse);
-//        System.out.println(adapterResponse.getMessage());
-//        System.out.println(adapterResponse.getExecutionStatus().toString());
-        String count = adapterResponse.getData().getChild("count").getText();
+
+        XML data = adapterResponse.getData().getChild("data");
+        assertNotNull("data null?", data);
+        String count = data.getChild("count").getText();
         assertTrue(Integer.parseInt(count) > 2);
-        assertTrue(adapterResponse.getData().getChild("items").hasChildren());
+        assertTrue(data.getChild("items").hasChildren());
     }
 }
