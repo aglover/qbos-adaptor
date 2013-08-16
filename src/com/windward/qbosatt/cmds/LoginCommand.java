@@ -16,12 +16,11 @@ import com.realops.foundation.adapterframework.AdapterResponse;
  */
 public class LoginCommand extends AbstractCommand {
     @Override
-    public XML executeCommand(AdapterRequest adapterRequest) throws Exception {
-        XML loginXML = adapterRequest.getData();
+    public XML executeCommand(XML requestXML) throws Exception {
         QTP qtp = this.getQtpInstance();
-        qtp.logIn(loginXML.getChild("qsi").getText(),
-                loginXML.getChild("username").getText(),
-                loginXML.getChild("password").getText());
+        qtp.logIn(requestXML.getChild("qsi").getText(),
+                requestXML.getChild("username").getText(),
+                requestXML.getChild("password").getText());
 
         return new XML("data").setText(qtp.getTicket());
     }

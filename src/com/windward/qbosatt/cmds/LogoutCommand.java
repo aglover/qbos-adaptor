@@ -15,10 +15,10 @@ import com.realops.foundation.adapterframework.AdapterResponse;
  */
 public class LogoutCommand extends AbstractCommand {
     @Override
-    public XML executeCommand(AdapterRequest adapterRequest) throws Exception {
+    public XML executeCommand(XML requestXML) throws Exception {
         try {
-            XML logoutXML = adapterRequest.getData();
-            QTP instance = QTP.Create(logoutXML.getChild("qsi").getText(), logoutXML.getChild("ticket").getText());
+            QTP instance = QTP.Create(requestXML.getChild("qsi").getText(),
+                    requestXML.getChild("ticket").getText());
             instance.logOut();
             return new XML("data").setText("true");
         } catch (Exception e) {

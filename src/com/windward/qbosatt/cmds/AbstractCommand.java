@@ -39,10 +39,18 @@ public abstract class AbstractCommand {
         return (this.qtpInstance == null) ? new QTP() : this.qtpInstance;
     }
 
+    /**
+     * Used by the factory to execute the command. This keeps track of execution time and
+     * handles all exceptions thrown by the commands. Appropriately wrapping the response
+     * in an adaptor response object.
+     *
+     * @param adapterRequest - the request made by the workflow
+     * @return AdapterResponse - the response handed back to the adapter manager.
+     */
     public AdapterResponse execute(AdapterRequest adapterRequest){
         long startTime = new Date().getTime();
         try {
-            XML data = this.executeCommand(adapterRequest);
+            XML data = this.executeCommand(adapterRequest.getData());
             long duration = new Date().getTime()- startTime;
             XML response = new XML("response");
             response.addChild("status").setText(Status.SUCCESS.toString());
@@ -60,6 +68,14 @@ public abstract class AbstractCommand {
             return new AdapterResponse(duration, "FAILURE", response, Status.SUCCESS);
         }
     }
-    public abstract XML executeCommand(AdapterRequest adapterRequest) throws Exception;
+
+    /**
+     * Abostract method for the concrete class to implement the command.
+     *
+     * @param  XML the XML provided by the adapter cal in workflow
+     * @return XML Object to return in the data portion of the adatper response.
+     * @throws Exception
+     */
+    public abstract XML executeCommand(XML requestXML) throws Exception;
 
 }

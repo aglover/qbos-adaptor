@@ -15,11 +15,11 @@ import com.realops.foundation.adapterframework.AdapterResponse;
  */
 public class DeleteCommand extends AbstractCommand {
     @Override
-    public XML executeCommand(AdapterRequest adapterRequest) throws Exception {
-        XML createXML = adapterRequest.getData();
-        QTP instance = QTP.Create(createXML.getChild("qsi").getText(), createXML.getChild("ticket").getText());
-        Applet applet = new Applet(Long.valueOf(createXML.getChild("class").getText()),
-                Long.valueOf(createXML.getChild("record").getText()));
+    public XML executeCommand(XML requestXML) throws Exception {
+        QTP instance = QTP.Create(requestXML.getChild("qsi").getText(),
+                requestXML.getChild("ticket").getText());
+        Applet applet = new Applet(Long.valueOf(requestXML.getChild("class").getText()),
+                Long.valueOf(requestXML.getChild("record").getText()));
 
         long recordId = instance.deleteRecord(applet);
         return new XML("data").setText(Long.toString(recordId));

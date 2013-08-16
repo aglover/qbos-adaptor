@@ -15,12 +15,12 @@ import com.realops.foundation.adapterframework.AdapterResponse;
  */
 public class CreateCommand extends AbstractCommand {
     @Override
-    public XML executeCommand(AdapterRequest adapterRequest) throws Exception {
-        XML createXML = adapterRequest.getData();
-        QTP instance = QTP.Create(createXML.getChild("qsi").getText(), createXML.getChild("ticket").getText());
-        Applet applet = new Applet(Long.valueOf(createXML.getChild("class").getText()));
+    public XML executeCommand(XML requestXML) throws Exception {
+        QTP instance = QTP.Create(requestXML.getChild("qsi").getText(),
+                requestXML.getChild("ticket").getText());
+        Applet applet = new Applet(Long.valueOf(requestXML.getChild("class").getText()));
 
-        for (XML field : createXML.getChild("fields").getChildren()) {
+        for (XML field : requestXML.getChild("fields").getChildren()) {
             applet.add(field.getName(), field.getText());
         }
         long recordId = instance.createRecord(applet);

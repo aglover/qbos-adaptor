@@ -18,29 +18,25 @@ import java.util.Map;
  */
 public class FindCommand extends AbstractCommand {
     @Override
-    public AdapterResponse execute(AdapterRequest adapterRequest) {
-        try {
-            XML queryXML = adapterRequest.getData();
-            QTP instance = QTP.Create(queryXML.getChild("qsi").getText(), queryXML.getChild("ticket").getText());
-            QuillDataTable dataTable = instance.query(queryXML.getChild("query").getText());
-            XML items = new XML("items");
+    public XML executeCommand(XML requestXML) throws Exception {
+        QTP instance = QTP.Create(requestXML.getChild("qsi").getText(),
+                requestXML.getChild("ticket").getText());
+        QuillDataTable dataTable = instance.query(requestXML.getChild("query").getText());
 
-            for(Map<String,String> row : dataTable){
-                XML item = new XML("item");
-                for(String key : row.keySet()){
-                    item.addChild(key).setText(row.get(key));
-                }
-                items.addChild(item);
+        XML response = new XML("data");
+        response.addChild("count").setText(Long.toString(dataTable.getRecordCount()));
+
+        XML items = new XML("items");
+        for (Map<String, String> row : dataTable) {
+            XML item = new XML("item");
+            for (String key : row.keySet()) {
+                item.addChild(key).setText(row.get(key));
             }
-            XML response = new XML("response");
-            response.addChild("count").setText(Long.toString(dataTable.getRecordCount()));
-            response.addChild(items);
-            return new AdapterResponse(300, "QTP Create successful: " ,
-                    response, Status.SUCCESS);
-        } catch (Exception e) {
-            System.out.println("Exception: " +e.getLocalizedMessage());
-            return exceptionResponse(e);
+            items.addChild(item);
         }
+        response.addChild(items);
+
+        return response;
     }
 
 }
