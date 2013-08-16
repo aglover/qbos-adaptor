@@ -4,7 +4,7 @@
         <location>this</location>
         <peer-name/>
     </peer-location>
-    <request-action>serverLogin</request-action>
+    <request-action>login</request-action>
     <request-data>
         <credentials>
             <qsi>dm2q</qsi>

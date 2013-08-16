@@ -37,7 +37,7 @@ public class QbosAdapterTest {
         verify(qtpThing, times(1)).logIn("dm2q", "cdale@windwardits.com", "Rilda411");
 
         assertEquals("test-ticket", adapterResponse.getData().getChild("data").getText());
-        assertEquals(Status.ERROR.toString(), adapterResponse.getData().getChild("status").getText());
+        assertEquals(Status.SUCCESS.toString(), adapterResponse.getData().getChild("status").getText());
     }
 
     @Test
@@ -52,7 +52,7 @@ public class QbosAdapterTest {
         AdapterResponse adapterResponse = adaptor.performAction(request);
         assertNotNull("adapterResponse was not null?", adapterResponse);
         verify(qtpThing, times(1)).logIn("", "cdale@windwardits.com", "Rilda411");
-        assertEquals("FAILURE", adapterResponse.getData().getText());
+        assertEquals(Status.ERROR.toString(), adapterResponse.getData().getChild("status").getText());
     }
 
     /**
@@ -81,7 +81,7 @@ public class QbosAdapterTest {
     public void testRequestObjectCalls() throws InvalidXMLFormatException, IOException {
         XML xml = XML.read("etc/test-login-req.xml");
         AdapterRequest request = new AdapterRequest(xml);
-        assertEquals("serverLogin", request.getAction());
+        assertEquals("login", request.getAction());
         assertNotNull(request.getData());
         assertEquals("dm2q", request.getData().getChild("qsi").getText());
     }
