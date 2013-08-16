@@ -27,7 +27,7 @@ import static org.mockito.Mockito.*;
 public class LogoutCommandTest {
 
     @Test
-    public void testLoginRequest() throws Exception {
+    public void testLogoutRequest() throws Exception {
         PowerMockito.mockStatic(QTP.class);
         QTP qtpThing = mock(QTP.class);
         when(QTP.Create("dm2q", "0C4F7501U1143U5955UDC8C1EB43B06C988")).thenReturn(qtpThing);
@@ -38,11 +38,11 @@ public class LogoutCommandTest {
         AdapterResponse adapterResponse = adaptor.performAction(request);
         assertNotNull("adapterResponse was not null?", adapterResponse);
         verify(qtpThing, times(1)).logOut();
-        assertEquals("successful logout", adapterResponse.getData().getText());
+        assertEquals("true", adapterResponse.getData().getChild("data").getText());
     }
 
     @Test
-    public void testLoginRequestWithExpiredTicket() throws Exception {
+    public void testLogoutRequestWithExpiredTicket() throws Exception {
         PowerMockito.mockStatic(QTP.class);
         QTP qtpThing = mock(QTP.class);
         when(QTP.Create("dm2q", "0C4F7501U1143U5955UDC8C1EB43B06C988")).thenThrow(new InvalidCredentialsException("test"));
@@ -53,6 +53,6 @@ public class LogoutCommandTest {
         AdapterResponse adapterResponse = adaptor.performAction(request);
         assertNotNull("adapterResponse was not null?", adapterResponse);
         verify(qtpThing, times(0)).logOut(); //logout never called b/c ticket expired
-        assertEquals("successful logout", adapterResponse.getData().getText());
+        assertEquals("true", adapterResponse.getData().getChild("data").getText());
     }
 }

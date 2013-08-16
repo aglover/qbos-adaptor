@@ -15,23 +15,18 @@ import com.realops.foundation.adapterframework.AdapterResponse;
  */
 public class LogoutCommand extends AbstractCommand {
     @Override
-    public AdapterResponse execute(AdapterRequest adapterRequest) {
+    public XML executeCommand(AdapterRequest adapterRequest) throws Exception {
         try {
             XML logoutXML = adapterRequest.getData();
             QTP instance = QTP.Create(logoutXML.getChild("qsi").getText(), logoutXML.getChild("ticket").getText());
             instance.logOut();
-            return getSuccessResponse();
+            return new XML("data").setText("true");
         } catch (Exception e) {
             if (e instanceof InvalidCredentialsException) {
-                return getSuccessResponse();
+                return new XML("data").setText("true");
             } else {
-                return exceptionResponse(e);
+                throw e;
             }
         }
-    }
-
-    private AdapterResponse getSuccessResponse() {
-        return new AdapterResponse(300, "QTP Logout successful",
-                new XML("response").setText("successful logout"), Status.SUCCESS);
     }
 }
