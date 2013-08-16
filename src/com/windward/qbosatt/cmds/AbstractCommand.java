@@ -6,6 +6,8 @@ import com.realops.common.xml.XML;
 import com.realops.foundation.adapterframework.AdapterRequest;
 import com.realops.foundation.adapterframework.AdapterResponse;
 
+import java.util.Date;
+
 /**
  * Created with IntelliJ IDEA.
  * User: aglover
@@ -37,10 +39,27 @@ public abstract class AbstractCommand {
         return (this.qtpInstance == null) ? new QTP() : this.qtpInstance;
     }
 
-    public abstract AdapterResponse execute(AdapterRequest adapterRequest);
-
-    protected AdapterResponse exceptionResponse(Exception e) {
-        return new AdapterResponse(300, "FAILURE: " + e.getLocalizedMessage(),
-                new XML("response").setText("FAILURE"), Status.ERROR);
+    public AdapterResponse execute(AdapterRequest adapterRequest){
+        long startTime = new Date().getTime();
+        try {
+            XML data = this.executeCommand(adapterRequest);
+            long duration = new Date().getTime()- startTime;
+            XML response = new XML("response");
+            response.addChild("status").setText(Status.SUCCESS.toString());
+            response.addChild("message").setText("Command successful");
+            response.addChild(data);
+            return new AdapterResponse(duration, "SUCCESS", response, Status.SUCCESS);
+        } catch (Exception e){
+            long duration = new Date().getTime()- startTime;
+            XML response = new XML("response");
+            response.addChild("status").setText(Status.ERROR.toString());
+            response.addChild("message").setText(e.getLocalizedMessage());
+            // If we return Status.ERROR here, the workflow engine will throw a compensation, which stops
+            // the workflow. So we need to return an adapter response of success, and a mesage and let
+            // the workflow deal with the response.
+            return new AdapterResponse(duration, "FAILURE", response, Status.SUCCESS);
+        }
     }
+    public abstract XML executeCommand(AdapterRequest adapterRequest) throws Exception;
+
 }
