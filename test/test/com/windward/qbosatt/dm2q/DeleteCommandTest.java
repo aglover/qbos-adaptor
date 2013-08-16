@@ -26,9 +26,6 @@ public class DeleteCommandTest extends QbosAdapterTest {
 
         assertNotNull("adapterResponse was not null?", adapterResponse);
         assertTrue("Adaptor was successful?", adapterResponse.getExecutionStatus()== Status.SUCCESS);
-//        System.out.println(adapterResponse.getExecutionStatus().toString());
-//        System.out.println(adapterResponse.getMessage().toString());
-//        System.out.println(adapterResponse.getData().toPrettyString());
 
     }
 }

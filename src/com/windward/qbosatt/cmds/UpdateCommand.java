@@ -2,10 +2,7 @@ package com.windward.qbosatt.cmds;
 
 import com.qbos.QTP.Applet;
 import com.qbos.QTP.QTP;
-import com.realops.common.enumeration.Status;
 import com.realops.common.xml.XML;
-import com.realops.foundation.adapterframework.AdapterRequest;
-import com.realops.foundation.adapterframework.AdapterResponse;
 
 /**
  * Created with IntelliJ IDEA.
@@ -13,36 +10,31 @@ import com.realops.foundation.adapterframework.AdapterResponse;
  * Date: 8/4/13
  * Time: 8:18 PM
  */
-public class UpdateCommand extends AbstractCommand{
+public class UpdateCommand extends AbstractCommand {
     @Override
-    public AdapterResponse execute(AdapterRequest adapterRequest) {
-        try {
-            XML updateXML = adapterRequest.getData();
-            XML item = updateXML.getChild("item");
-            long recordId = Long.valueOf(item.getChild("record").getText());
-            QTP instance = QTP.Create(updateXML.getChild("qsi").getText(), updateXML.getChild("ticket").getText());
-            Applet applet = new Applet(Long.valueOf(updateXML.getChild("class").getText()),recordId);
+    public XML executeCommand(XML requestXML) throws Exception {
 
-            if(item.getChild("status") != null){
-                instance.updateStatus(applet, Long.valueOf(item.getChild("status").getText()), true);
-            }
-            XML notes = item.getChild("notes");
-            if (notes !=null ){
-                for (XML note: notes.getChildren()){
-                    instance.addNote(applet, note.getText());
-                }
-            }
-            XML fields = item.getChild("fields");
-            if (fields!=null && fields.hasChildren()){
-                for(XML field: fields.getChildren()){
-                    applet.add(field.getElement().getName(), field.getText());
-                }
-                instance.updateRecord(applet);
-            }
-            return new AdapterResponse(300, "QTP Update successful: " + recordId,
-                    new XML("response").setText(Long.toString(recordId)), Status.SUCCESS);
-        } catch (Exception e) {
-            return exceptionResponse(e);
+        XML item = requestXML.getChild("item");
+        long recordId = Long.valueOf(item.getChild("record").getText());
+        QTP instance = QTP.Create(requestXML.getChild("qsi").getText(), requestXML.getChild("ticket").getText());
+        Applet applet = new Applet(Long.valueOf(requestXML.getChild("class").getText()), recordId);
+
+        if (item.getChild("status") != null) {
+            instance.updateStatus(applet, Long.valueOf(item.getChild("status").getText()), true);
         }
+        XML notes = item.getChild("notes");
+        if (notes != null) {
+            for (XML note : notes.getChildren()) {
+                instance.addNote(applet, note.getText());
+            }
+        }
+        XML fields = item.getChild("fields");
+        if (fields != null && fields.hasChildren()) {
+            for (XML field : fields.getChildren()) {
+                applet.add(field.getElement().getName(), field.getText());
+            }
+            instance.updateRecord(applet);
+        }
+        return new XML("data").setText(Long.toString(recordId));
     }
 }

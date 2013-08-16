@@ -44,7 +44,9 @@ public class UpdateCommandTest {
         QTP.Create("dm2q", "0C4F7501U1143U5955UDC8C1EB43B06C988");
         assertNotNull("adapterResponse was not null?", adapterResponse);
         verify(qtpThing, times(1)).updateRecord(any(Applet.class));
-        assertTrue("Adapter was successful", adapterResponse.getExecutionStatus()== Status.SUCCESS);
+        assertEquals("69", adapterResponse.getData().getChild("data").getText());
+        assertEquals(Status.SUCCESS.toString(), adapterResponse.getData().getChild("status").getText());
+
     }
 
     @Test
@@ -66,7 +68,7 @@ public class UpdateCommandTest {
         verify(qtpThing, times(0)).updateRecord(any(Applet.class));
         verify(qtpThing, times(1)).updateStatus(any(Applet.class), eq(9l), eq(true));
         verify(qtpThing, times(1)).addNote(any(Applet.class), any(String.class));
-        assertTrue("Adapter was successful", adapterResponse.getExecutionStatus()== Status.SUCCESS);
+        assertEquals(Status.SUCCESS.toString(), adapterResponse.getData().getChild("status").getText());
     }
 
     @Test
@@ -83,6 +85,6 @@ public class UpdateCommandTest {
         QTP.Create("dm2q", "0C4F7501U1143U5955UDC8C1EB43B06C988");
         assertNotNull("adapterResponse was not null?", adapterResponse);
         verify(qtpThing, times(0)).updateRecord(any(Applet.class));
-        assertEquals("FAILURE", adapterResponse.getData().getText());
+        assertEquals(Status.ERROR.toString(), adapterResponse.getData().getChild("status").getText());
     }
 }
