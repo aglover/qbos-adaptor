@@ -2,6 +2,7 @@ package test.com.windward.qbosatt;
 
 import com.qbos.QTP.Applet;
 import com.qbos.QTP.QTP;
+import com.realops.common.enumeration.Status;
 import com.realops.common.xml.XML;
 import com.realops.foundation.adapterframework.AdapterRequest;
 import com.realops.foundation.adapterframework.AdapterResponse;
@@ -46,7 +47,8 @@ public class CreateCommandTest {
         QTP.Create("dm2q", "0C4F7501U1143U5955UDC8C1EB43B06C988");
         assertNotNull("adapterResponse was not null?", adapterResponse);
         verify(qtpThing, times(1)).createRecord(any(Applet.class));
-        assertEquals("10000000000", adapterResponse.getData().getText());
+        assertEquals("10000000000", adapterResponse.getData().getChild("data").getText());
+        assertEquals(Status.SUCCESS.toString(), adapterResponse.getData().getChild("status").getText());
     }
 
     @Test
@@ -63,6 +65,6 @@ public class CreateCommandTest {
         QTP.Create("dm2q", "0C4F7501U1143U5955UDC8C1EB43B06C988");
         assertNotNull("adapterResponse was not null?", adapterResponse);
         verify(qtpThing, times(0)).createRecord(any(Applet.class));
-        assertEquals("FAILURE", adapterResponse.getData().getText());
+        assertEquals(Status.ERROR.toString(), adapterResponse.getData().getChild("status").getText());
     }
 }
