@@ -30,9 +30,7 @@ public class UpdateCommand extends AbstractCommand {
         }
         XML fields = item.getChild("fields");
         if (fields != null && fields.hasChildren()) {
-            for (XML field : fields.getChildren()) {
-                applet.add(field.getElement().getName(), field.getText());
-            }
+            this.setFieldsInApplet(fields, applet);
             instance.updateRecord(applet);
         }
         return new XML("data").setText(Long.toString(recordId));

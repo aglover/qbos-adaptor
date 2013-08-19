@@ -2,8 +2,11 @@ package com.windward.qbosatt.cmds;
 
 import com.qbos.QTP.QTP;
 import com.qbos.QTP.QuillDataTable;
+import com.realops.common.xml.InvalidXMLFormatException;
 import com.realops.common.xml.XML;
+import org.jdom.Text;
 
+import java.io.StringReader;
 import java.util.Map;
 
 /**
@@ -27,7 +30,18 @@ public class FindCommand extends AbstractCommand {
         for (Map<String, String> row : dataTable) {
             XML item = new XML("item");
             for (String key : row.keySet()) {
-                item.addChild(key).setText(row.get(key));
+                String value = row.get(key);
+                if (value.startsWith("<"+key)){
+                    try { // to parse the xml
+                        item.addChild(XML.read(new StringReader(value)));
+                    } catch (InvalidXMLFormatException e) {
+                        // if exception, then just set the value of the node
+                        item.addChild(key).setText(value);
+                    }
+                } else {
+                  item.addChild(key).setText(row.get(key));
+                }
+
             }
             items.addChild(item);
         }

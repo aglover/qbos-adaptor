@@ -33,4 +33,20 @@ public class CreateCommandTest extends QbosAdapterTest{
         assertTrue("id greater than zero?", Long.parseLong(idString)>0);
     }
 
+    @Test
+    public void testCreateEmbeddedXML() throws Exception {
+        XML xml = this.loginAndLoadXML("etc/dm2q/test-create-embedded-xml.xml");
+        AdapterRequest request = new AdapterRequest(xml);
+        QbosAdapter adaptor = new QbosAdapter();
+        AdapterResponse adapterResponse = adaptor.performAction(request);
+
+        assertNotNull("adapterResponse was not null?", adapterResponse);
+
+        assertNotNull("item not null?", adapterResponse.getData());
+        String idString = adapterResponse.getData().getChild("data").getText();
+        assertNotNull("id was null?", idString);
+        assertTrue("id was set?", idString.length()>0);
+        assertTrue("id greater than zero?", Long.parseLong(idString)>0);
+    }
+
 }

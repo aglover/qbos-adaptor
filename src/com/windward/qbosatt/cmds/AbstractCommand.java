@@ -1,5 +1,6 @@
 package com.windward.qbosatt.cmds;
 
+import com.qbos.QTP.Applet;
 import com.qbos.QTP.QTP;
 import com.realops.common.enumeration.Status;
 import com.realops.common.xml.XML;
@@ -77,5 +78,19 @@ public abstract class AbstractCommand {
      * @throws Exception
      */
     public abstract XML executeCommand(XML requestXML) throws Exception;
+
+    protected void setFieldsInApplet(XML fields, Applet applet){
+        applet.clear();
+        if (fields!=null && fields.hasChildren()){
+            for (XML field : fields.getChildren()) {
+                if (field.hasChildren()){
+                    applet.add(field.getName(), field.toRawString());
+                } else {
+                    applet.add(field.getName(), field.getText());
+                }
+            }
+        }
+
+    }
 
 }

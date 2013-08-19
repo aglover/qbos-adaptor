@@ -1,0 +1,23 @@
+<adapter-request>
+    <target-adapter>responseAdapter</target-adapter>
+    <peer-location>
+        <location>this</location>
+        <peer-name/>
+    </peer-location>
+    <request-action>create</request-action>
+    <request-data>
+        <create>
+            <qsi>dm2q</qsi>
+            <ticket>0C4F7501U1143U5955UDC8C1EB43B06C988</ticket>
+            <class>11607</class>
+            <fields>
+                <Server_Platform>Neo2 Consumer DNS</Server_Platform>
+                <Location>Broadway</Location>
+                <Vendor><f>a</f></Vendor>
+                <OS_Name>Red Hat</OS_Name>
+                <OS_Version>12.1</OS_Version>
+                <RAM>12GB</RAM>
+            </fields>
+        </create>
+    </request-data>
+</adapter-request>
