@@ -1,0 +1,10 @@
+<adapter id="qboss">
+    <name>QBOS</name>
+    <adapter-implementation-descriptor>
+        <adapter-type>qboss-adapter</adapter-type>
+        <adapter-version>1.0</adapter-version>
+    </adapter-implementation-descriptor>
+    <config>
+        <compact-xml>false</compact-xml>
+    </config>
+</adapter>

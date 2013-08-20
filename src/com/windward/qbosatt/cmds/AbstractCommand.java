@@ -6,6 +6,8 @@ import com.realops.common.enumeration.Status;
 import com.realops.common.xml.XML;
 import com.realops.foundation.adapterframework.AdapterRequest;
 import com.realops.foundation.adapterframework.AdapterResponse;
+import com.realops.foundation.adapterframework.configuration.BaseAdapterConfiguration;
+import com.windward.qbosatt.QbosActorConfiguration;
 
 import java.util.Date;
 
@@ -17,7 +19,13 @@ import java.util.Date;
  */
 public abstract class AbstractCommand {
     private QTP qtpInstance;
+    private QbosActorConfiguration config;
 
+    public void setConfig(BaseAdapterConfiguration aConfig){
+        if (aConfig instanceof QbosActorConfiguration){
+            this.config = (QbosActorConfiguration)aConfig;
+        }
+    }
     /**
      * IoC mainly used for testing; that is, a mock instance can be provided
      * see getQtpInstance for more details
@@ -81,10 +89,14 @@ public abstract class AbstractCommand {
 
     protected void setFieldsInApplet(XML fields, Applet applet){
         applet.clear();
+        boolean shouldCompact = this.config!=null && this.config.shouldCompactXML();
         if (fields!=null && fields.hasChildren()){
             for (XML field : fields.getChildren()) {
                 if (field.hasChildren()){
-                    applet.add(field.getName(), field.toRawString());
+                    if (shouldCompact)
+                        applet.add(field.getName(), field.toCompactString());
+                    else
+                        applet.add(field.getName(), field.toPrettyString());
                 } else {
                     applet.add(field.getName(), field.getText());
                 }

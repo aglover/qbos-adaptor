@@ -45,12 +45,15 @@ public class QbosAdapter extends AbstractActorAdapter {
         return (this.qtpInstance == null) ? new QTP() : this.qtpInstance;
     }
 
+
+
     @Override
     public AdapterResponse performAction(AdapterRequest adapterRequest) throws AdapterException, InterruptedException {
         try {
             AbstractCommand cmd = newCommand(adapterRequest);
             cmd.setQtpInstance(this.getQtpInstance());
-            return cmd.execute(adapterRequest);
+            cmd.setConfig(this.getConfiguration());
+            return cmd.execute(adapterRequest );
         } catch (Exception e) {
             return new AdapterResponse(300, "FAILURE: " + e.getLocalizedMessage(),
                     new XML("response").setText("FAILURE"), Status.ERROR);
