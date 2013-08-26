@@ -27,7 +27,7 @@ import static org.mockito.Mockito.*;
  */
 @RunWith(PowerMockRunner.class)
 @PrepareForTest(QTP.class)
-public class DeleteCommandTest {
+public class UndeleteCommandTest {
     @Test
     public void testUndeleteRequest() throws Exception {
         PowerMockito.mockStatic(QTP.class);
@@ -42,17 +42,17 @@ public class DeleteCommandTest {
         PowerMockito.verifyStatic(Mockito.times(1));
         QTP.Create("dm2q", "0C4F7501U1143U5955UDC8C1EB43B06C988");
         assertNotNull("adapterResponse was not null?", adapterResponse);
-        verify(qtpThing, times(1)).deleteRecord(any(Applet.class));
+        verify(qtpThing, times(1)).undeleteRecord(any(Applet.class));
         assertEquals("10000000000", adapterResponse.getData().getChild("data").getText());
         assertEquals(Status.SUCCESS.toString(), adapterResponse.getData().getChild("status").getText());
     }
 
     @Test
-    public void testDeleteRequestWithException() throws Exception {
+    public void testUndeleteRequestWithException() throws Exception {
         PowerMockito.mockStatic(QTP.class);
         QTP qtpThing = mock(QTP.class);
         when(QTP.Create("dm2q", "0C4F7501U1143U5955UDC8C1EB43B06C988")).thenThrow(Exception.class);
-        XML xml = XML.read("etc/untest-delete-req.xml");
+        XML xml = XML.read("etc/test-undelete-req.xml");
         AdapterRequest request = new AdapterRequest(xml);
         QbosAdapter adaptor = new QbosAdapter();
         adaptor.setQtpInstance(qtpThing);

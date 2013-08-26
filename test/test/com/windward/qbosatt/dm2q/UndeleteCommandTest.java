@@ -17,7 +17,7 @@ import static org.junit.Assert.assertTrue;
  * Date: 8/4/13
  * Time: 8:16 PM
  */
-public class DeleteCommandTest extends QbosAdapterTest {
+public class UndeleteCommandTest extends QbosAdapterTest {
     @Test
     public void testCommand() throws Exception {
         XML xml = this.loginAndLoadXML("etc/dm2q/test-undelete-req.xml");
