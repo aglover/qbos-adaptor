@@ -4,7 +4,7 @@ import com.realops.common.enumeration.Status;
 import com.realops.common.xml.XML;
 import com.realops.foundation.adapterframework.AdapterRequest;
 import com.realops.foundation.adapterframework.AdapterResponse;
-import com.windward.qbosatt.QbosAdapter;
+import com.windward.qbosatt.QbosActor;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -22,7 +22,7 @@ public class DeleteCommandTest extends QbosAdapterTest {
     public void testCommand() throws Exception {
         XML xml = this.loginAndLoadXML("etc/dm2q/test-delete-req.xml");
         AdapterRequest request = new AdapterRequest(xml);
-        QbosAdapter adaptor = new QbosAdapter();
+        QbosActor adaptor = new QbosActor();
         AdapterResponse adapterResponse = adaptor.performAction(request);
 
         assertNotNull("adapterResponse was not null?", adapterResponse);

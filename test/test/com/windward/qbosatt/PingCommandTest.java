@@ -1,17 +1,11 @@
 package test.com.windward.qbosatt;
 
-import com.qbos.QTP.Applet;
 import com.qbos.QTP.QTP;
 import com.realops.common.xml.XML;
 import com.realops.foundation.adapterframework.AdapterRequest;
 import com.realops.foundation.adapterframework.AdapterResponse;
-import com.windward.qbosatt.QbosAdapter;
+import com.windward.qbosatt.QbosActor;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Mockito;
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -31,7 +25,7 @@ public class PingCommandTest {
         when(qtpThing.ping()).thenReturn(true);
         XML xml = XML.read("etc/test-ping-req.xml");
         AdapterRequest request = new AdapterRequest(xml);
-        QbosAdapter adaptor = new QbosAdapter();
+        QbosActor adaptor = new QbosActor();
         adaptor.setQtpInstance(qtpThing);
         AdapterResponse adapterResponse = adaptor.performAction(request);
         assertNotNull("adapterResponse was not null?", adapterResponse);
@@ -46,7 +40,7 @@ public class PingCommandTest {
         when(qtpThing.ping()).thenReturn(false);
         XML xml = XML.read("etc/test-ping-req.xml");
         AdapterRequest request = new AdapterRequest(xml);
-        QbosAdapter adaptor = new QbosAdapter();
+        QbosActor adaptor = new QbosActor();
         adaptor.setQtpInstance(qtpThing);
         AdapterResponse adapterResponse = adaptor.performAction(request);
         assertNotNull("adapterResponse was not null?", adapterResponse);

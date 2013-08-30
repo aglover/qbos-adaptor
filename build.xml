@@ -1,6 +1,6 @@
 <project name="qbos-adapter" basedir="." default="jar">
 
-    <property name="version" value="1.0"/>
+    <property name="version" value="1.2"/>
     <property name="lib.dir" value="lib"/>
     <property name="build.dir" value="target"/>
     <property name="build.test.dir" value="${build.dir}/test"/>
@@ -41,7 +41,7 @@
 
         <mkdir dir="${aroar.dir}"/>
 
-        <copy file="lib/com.qbos.QTP-0.75.jar" tofile="${aroar.dir}/com.qbos.QTP.jar"/>
+        <copy file="lib/com.qbos.QTP-0.77.jar" tofile="${aroar.dir}/com.qbos.QTP.jar"/>
         <copy file="lib/commons-lang-2.3.jar" tofile="${aroar.dir}/commons-lang-2.3.jar"/>
         <copy file="lib/json-simple-1.1.1.jar" tofile="${aroar.dir}/json-simple-1.1.1.jar"/>
         <copy file="lib/com.springsource.org.apache.axis-1.4.0.jar" tofile="${aroar.dir}/com.springsource.org.apache.axis-1.4.0.jar"/>

@@ -7,7 +7,7 @@ import com.realops.common.xml.InvalidXMLFormatException;
 import com.realops.common.xml.XML;
 import com.realops.foundation.adapterframework.AdapterRequest;
 import com.realops.foundation.adapterframework.AdapterResponse;
-import com.windward.qbosatt.QbosAdapter;
+import com.windward.qbosatt.QbosActor;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -30,7 +30,7 @@ public class QbosAdapterTest {
         when(qtpThing.getTicket()).thenReturn("test-ticket");
         XML xml = XML.read("etc/test-login-req.xml");
         AdapterRequest request = new AdapterRequest(xml);
-        QbosAdapter adaptor = new QbosAdapter();
+        QbosActor adaptor = new QbosActor();
         adaptor.setQtpInstance(qtpThing);
         AdapterResponse adapterResponse = adaptor.performAction(request);
         assertNotNull("adapterResponse was not null?", adapterResponse);
@@ -47,7 +47,7 @@ public class QbosAdapterTest {
         doThrow(new UnknownQtpException()).when(qtpThing).logIn("", "cdale@windwardits.com", "Rilda411");
         XML xml = XML.read("etc/test-login-req-err.xml");
         AdapterRequest request = new AdapterRequest(xml);
-        QbosAdapter adaptor = new QbosAdapter();
+        QbosActor adaptor = new QbosActor();
         adaptor.setQtpInstance(qtpThing);
         AdapterResponse adapterResponse = adaptor.performAction(request);
         assertNotNull("adapterResponse was not null?", adapterResponse);
@@ -90,10 +90,11 @@ public class QbosAdapterTest {
     public void testNotNullResponse() throws Exception {
         XML xml = XML.read("etc/test-invalid-req.xml");
         AdapterRequest request = new AdapterRequest(xml);
-        QbosAdapter adaptor = new QbosAdapter();
+        QbosActor adaptor = new QbosActor();
         AdapterResponse adapterResponse = adaptor.performAction(request);
         assertNotNull("adapterResponse was not null?", adapterResponse);
-        assertEquals("FAILURE", adapterResponse.getData().getText());
+        assertEquals(Status.ERROR.toString(), adapterResponse.getMessage());
+        assertEquals(Status.ERROR.toString(), adapterResponse.getData().getChild("status").getText());
     }
 
 }

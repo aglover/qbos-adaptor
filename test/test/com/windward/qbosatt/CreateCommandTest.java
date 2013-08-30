@@ -6,7 +6,7 @@ import com.realops.common.enumeration.Status;
 import com.realops.common.xml.XML;
 import com.realops.foundation.adapterframework.AdapterRequest;
 import com.realops.foundation.adapterframework.AdapterResponse;
-import com.windward.qbosatt.QbosAdapter;
+import com.windward.qbosatt.QbosActor;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
@@ -40,7 +40,7 @@ public class CreateCommandTest {
         when(qtpThing.createRecord(any(Applet.class))).thenReturn(new Long(10000000000L));
         XML xml = XML.read("etc/test-create-req.xml");
         AdapterRequest request = new AdapterRequest(xml);
-        QbosAdapter adaptor = new QbosAdapter();
+        QbosActor adaptor = new QbosActor();
         adaptor.setQtpInstance(qtpThing);
         AdapterResponse adapterResponse = adaptor.performAction(request);
         PowerMockito.verifyStatic(Mockito.times(1));
@@ -58,7 +58,7 @@ public class CreateCommandTest {
         when(QTP.Create("dm2q", "0C4F7501U1143U5955UDC8C1EB43B06C988")).thenThrow(Exception.class);
         XML xml = XML.read("etc/test-create-req.xml");
         AdapterRequest request = new AdapterRequest(xml);
-        QbosAdapter adaptor = new QbosAdapter();
+        QbosActor adaptor = new QbosActor();
         adaptor.setQtpInstance(qtpThing);
         AdapterResponse adapterResponse = adaptor.performAction(request);
         PowerMockito.verifyStatic(Mockito.times(1));

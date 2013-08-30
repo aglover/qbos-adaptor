@@ -5,7 +5,7 @@ import com.qbos.QTP.QTP;
 import com.realops.common.xml.XML;
 import com.realops.foundation.adapterframework.AdapterRequest;
 import com.realops.foundation.adapterframework.AdapterResponse;
-import com.windward.qbosatt.QbosAdapter;
+import com.windward.qbosatt.QbosActor;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.powermock.api.mockito.PowerMockito;
@@ -33,7 +33,7 @@ public class LogoutCommandTest {
         when(QTP.Create("dm2q", "0C4F7501U1143U5955UDC8C1EB43B06C988")).thenReturn(qtpThing);
         XML xml = XML.read("etc/test-logout-req.xml");
         AdapterRequest request = new AdapterRequest(xml);
-        QbosAdapter adaptor = new QbosAdapter();
+        QbosActor adaptor = new QbosActor();
         adaptor.setQtpInstance(qtpThing);
         AdapterResponse adapterResponse = adaptor.performAction(request);
         assertNotNull("adapterResponse was not null?", adapterResponse);
@@ -48,7 +48,7 @@ public class LogoutCommandTest {
         when(QTP.Create("dm2q", "0C4F7501U1143U5955UDC8C1EB43B06C988")).thenThrow(new InvalidCredentialsException("test"));
         XML xml = XML.read("etc/test-logout-req.xml");
         AdapterRequest request = new AdapterRequest(xml);
-        QbosAdapter adaptor = new QbosAdapter();
+        QbosActor adaptor = new QbosActor();
         adaptor.setQtpInstance(qtpThing);
         AdapterResponse adapterResponse = adaptor.performAction(request);
         assertNotNull("adapterResponse was not null?", adapterResponse);

@@ -3,7 +3,7 @@ package test.com.windward.qbosatt.dm2q;
 import com.realops.common.xml.XML;
 import com.realops.foundation.adapterframework.AdapterRequest;
 import com.realops.foundation.adapterframework.AdapterResponse;
-import com.windward.qbosatt.QbosAdapter;
+import com.windward.qbosatt.QbosActor;
 import org.junit.Test;
 
 import static org.junit.Assert.assertNotNull;
@@ -21,7 +21,7 @@ public class CreateCommandTest extends QbosAdapterTest{
     public void testCreateRequest() throws Exception {
         XML xml = this.loginAndLoadXML("etc/dm2q/test-create-req.xml");
         AdapterRequest request = new AdapterRequest(xml);
-        QbosAdapter adaptor = new QbosAdapter();
+        QbosActor adaptor = new QbosActor();
         AdapterResponse adapterResponse = adaptor.performAction(request);
 
         assertNotNull("adapterResponse was not null?", adapterResponse);
@@ -37,7 +37,7 @@ public class CreateCommandTest extends QbosAdapterTest{
     public void testCreateEmbeddedXML() throws Exception {
         XML xml = this.loginAndLoadXML("etc/dm2q/test-create-embedded-xml.xml");
         AdapterRequest request = new AdapterRequest(xml);
-        QbosAdapter adaptor = new QbosAdapter();
+        QbosActor adaptor = new QbosActor();
         AdapterResponse adapterResponse = adaptor.performAction(request);
 
         assertNotNull("adapterResponse was not null?", adapterResponse);

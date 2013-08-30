@@ -1,6 +1,6 @@
 <adapter-metadata>
     <description></description>
-    <class-name>com.windward.qbosatt.QbosAdapter</class-name>
+    <class-name>com.windward.qbosatt.QbosActor</class-name>
     <adapter-jar>@ant.project.name@-@version@.jar</adapter-jar>
     <required-jars>
         <required-jar>com.qbos.QTP.jar</required-jar>
@@ -17,7 +17,5 @@
         <required-jar>com.springsource.javax.xml.soap-1.3.0.jar</required-jar>
         <required-jar>com.springsource.org.apache.commons.codec-1.6.0.jar</required-jar>
         <required-jar>commons-discovery-0.5.jar</required-jar>
-
-
     </required-jars>
 </adapter-metadata>

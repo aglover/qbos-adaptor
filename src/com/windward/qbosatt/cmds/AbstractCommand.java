@@ -3,13 +3,16 @@ package com.windward.qbosatt.cmds;
 import com.qbos.QTP.Applet;
 import com.qbos.QTP.QTP;
 import com.realops.common.enumeration.Status;
+import com.realops.common.xml.InvalidXMLFormatException;
 import com.realops.common.xml.XML;
 import com.realops.foundation.adapterframework.AdapterRequest;
 import com.realops.foundation.adapterframework.AdapterResponse;
 import com.realops.foundation.adapterframework.configuration.BaseAdapterConfiguration;
 import com.windward.qbosatt.QbosActorConfiguration;
 
+import java.io.StringReader;
 import java.util.Date;
+import java.util.Map;
 
 /**
  * Created with IntelliJ IDEA.
@@ -65,7 +68,7 @@ public abstract class AbstractCommand {
             response.addChild("status").setText(Status.SUCCESS.toString());
             response.addChild("message").setText("Command successful");
             response.addChild(data);
-            return new AdapterResponse(duration, "SUCCESS", response, Status.SUCCESS);
+            return new AdapterResponse(duration, Status.SUCCESS.toString(), response, Status.SUCCESS);
         } catch (Exception e){
             long duration = new Date().getTime()- startTime;
             XML response = new XML("response");
@@ -74,7 +77,7 @@ public abstract class AbstractCommand {
             // If we return Status.ERROR here, the workflow engine will throw a compensation, which stops
             // the workflow. So we need to return an adapter response of success, and a mesage and let
             // the workflow deal with the response.
-            return new AdapterResponse(duration, "FAILURE", response, Status.SUCCESS);
+            return new AdapterResponse(duration, Status.ERROR.toString(), response, Status.SUCCESS);
         }
     }
 
@@ -102,7 +105,23 @@ public abstract class AbstractCommand {
                 }
             }
         }
-
     }
 
+    protected XML createItemFromMap(Map<String, String> row){
+        XML item = new XML("item");
+        for (String key : row.keySet()) {
+            String value = row.get(key);
+            if (value.startsWith("<"+key)){
+                try { // to parse the xml
+                    item.addChild(XML.read(new StringReader(value)));
+                } catch (InvalidXMLFormatException e) {
+                    // if exception, then just set the value of the node
+                    item.addChild(key).setText(value);
+                }
+            } else {
+                item.addChild(key).setText(row.get(key));
+            }
+        }
+        return item;
+    }
 }

@@ -10,6 +10,8 @@ import com.realops.foundation.adapterframework.AdapterRequest;
 import com.realops.foundation.adapterframework.AdapterResponse;
 import com.windward.qbosatt.cmds.AbstractCommand;
 
+import java.util.Date;
+
 import static java.lang.Class.forName;
 import static org.apache.commons.lang.WordUtils.capitalize;
 
@@ -19,7 +21,7 @@ import static org.apache.commons.lang.WordUtils.capitalize;
  * Date: 7/26/13
  * Time: 2:14 PM
  */
-public class QbosAdapter extends AbstractActorAdapter {
+public class QbosActor extends AbstractActorAdapter {
 
     private QTP qtpInstance;
 
@@ -49,14 +51,18 @@ public class QbosAdapter extends AbstractActorAdapter {
 
     @Override
     public AdapterResponse performAction(AdapterRequest adapterRequest) throws AdapterException, InterruptedException {
+        long startTime = new Date().getTime();
         try {
             AbstractCommand cmd = newCommand(adapterRequest);
             cmd.setQtpInstance(this.getQtpInstance());
             cmd.setConfig(this.getConfiguration());
             return cmd.execute(adapterRequest );
         } catch (Exception e) {
-            return new AdapterResponse(300, "FAILURE: " + e.getLocalizedMessage(),
-                    new XML("response").setText("FAILURE"), Status.ERROR);
+            long duration = new Date().getTime()- startTime;
+            XML response = new XML("response");
+            response.addChild("status").setText(Status.ERROR.toString());
+            response.addChild("message").setText(e.getLocalizedMessage());
+            return new AdapterResponse(duration, Status.ERROR.toString() ,response, Status.SUCCESS);
         }
     }
 
