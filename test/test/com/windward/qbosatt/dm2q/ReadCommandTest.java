@@ -29,7 +29,7 @@ public class ReadCommandTest extends QbosAdapterTest{
         assertNotNull("adapterResponse was not null?", adapterResponse);
 
 
-        System.out.println(adapterResponse.getData().toPrettyString());
+//        System.out.println(adapterResponse.getData().toPrettyString());
         XML data = adapterResponse.getData().getChild("data");
         assertNotNull("data null?", data);
 
@@ -49,7 +49,7 @@ public class ReadCommandTest extends QbosAdapterTest{
         AdapterResponse adapterResponse = adapter.performAction(request);
         assertNotNull("adapterResponse was not null?", adapterResponse);
 
-        System.out.println(adapterResponse.getData().toPrettyString());
+//        System.out.println(adapterResponse.getData().toPrettyString());
 
         XML data = adapterResponse.getData().getChild("data");
         assertNotNull("data null?", data);

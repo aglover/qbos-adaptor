@@ -111,10 +111,12 @@ public abstract class AbstractCommand {
         XML item = new XML("item");
         for (String key : row.keySet()) {
             String value = row.get(key);
-            if (value.startsWith("<"+key)){
+            if (value.startsWith("<") || value.startsWith("&lt;")){
                 try { // to parse the xml
-                    item.addChild(XML.read(new StringReader(value)));
+                    String unescapedValue = value.replaceAll("&lt;", "<").replaceAll("&gt;", ">");
+                    item.addChild(key).addChild(XML.read(new StringReader(unescapedValue)));
                 } catch (InvalidXMLFormatException e) {
+                    System.out.println("YO, no go on xml conversion"+e.getLocalizedMessage());
                     // if exception, then just set the value of the node
                     item.addChild(key).setText(value);
                 }
