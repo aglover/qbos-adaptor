@@ -1,6 +1,7 @@
 package com.windward.qbosatt.cmds;
 
 import com.qbos.QTP.QTP;
+import com.qbos.QTP.QuillDataRow;
 import com.qbos.QTP.QuillDataTable;
 import com.realops.common.xml.InvalidXMLFormatException;
 import com.realops.common.xml.XML;
@@ -28,7 +29,7 @@ public class ReadCommand extends AbstractCommand {
         response.addChild("count").setText(Long.toString(dataTable.getRecordCount()));
 
         // Only should be one of theses
-        for (Map<String, String> row : dataTable) {
+        for (QuillDataRow row : dataTable) {
             response.addChild(this.createItemFromMap(row));
         }
 

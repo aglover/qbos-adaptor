@@ -1,6 +1,7 @@
 package com.windward.qbosatt.cmds;
 
 import com.qbos.QTP.QTP;
+import com.qbos.QTP.QuillDataRow;
 import com.qbos.QTP.QuillDataTable;
 import com.realops.common.xml.XML;
 import java.util.Map;
@@ -25,7 +26,7 @@ public class FindCommand extends AbstractCommand {
         response.addChild("count").setText(Long.toString(dataTable.getRecordCount()));
 
         XML items = new XML("items");
-        for (Map<String, String> row : dataTable) {
+        for (QuillDataRow row : dataTable) {
             items.addChild(this.createItemFromMap(row));
         }
         response.addChild(items);

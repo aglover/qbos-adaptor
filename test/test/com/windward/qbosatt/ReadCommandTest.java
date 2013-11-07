@@ -33,7 +33,9 @@ import static org.mockito.Mockito.*;
 @PrepareForTest(QTP.class)
 public class ReadCommandTest {
 
-    @Test
+//  If we need to go back to parsing their string, then we need this test case back. With their new API
+    // returning an xml document, we do not need this test.
+//    @Test
     public void testReadRequest() throws Exception {
         PowerMockito.mockStatic(QTP.class);
         QTP qtpThing = mock(QTP.class);

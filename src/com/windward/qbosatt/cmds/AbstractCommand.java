@@ -1,7 +1,9 @@
 package com.windward.qbosatt.cmds;
 
 import com.qbos.QTP.Applet;
+import com.qbos.QTP.KeyNotFoundException;
 import com.qbos.QTP.QTP;
+import com.qbos.QTP.QuillDataRow;
 import com.realops.common.enumeration.Status;
 import com.realops.common.xml.InvalidXMLFormatException;
 import com.realops.common.xml.XML;
@@ -9,8 +11,16 @@ import com.realops.foundation.adapterframework.AdapterRequest;
 import com.realops.foundation.adapterframework.AdapterResponse;
 import com.realops.foundation.adapterframework.configuration.BaseAdapterConfiguration;
 import com.windward.qbosatt.QbosActorConfiguration;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 import java.io.StringReader;
+import java.io.StringWriter;
 import java.util.Date;
 import java.util.Map;
 
@@ -107,23 +117,42 @@ public abstract class AbstractCommand {
         }
     }
 
-    protected XML createItemFromMap(Map<String, String> row){
+    protected XML createItemFromMap(QuillDataRow row) throws KeyNotFoundException{
         XML item = new XML("item");
         for (String key : row.keySet()) {
-            String value = row.get(key);
-            if (value.startsWith("<") || value.startsWith("&lt;")){
-                try { // to parse the xml
-                    String unescapedValue = value.replaceAll("&lt;", "<").replaceAll("&gt;", ">");
-                    item.addChild(key).addChild(XML.read(new StringReader(unescapedValue)));
-                } catch (InvalidXMLFormatException e) {
-                    System.out.println("YO, no go on xml conversion"+e.getLocalizedMessage());
-                    // if exception, then just set the value of the node
-                    item.addChild(key).setText(value);
+            try {
+                Document doc = row.getAsXmlDocument(key);
+                Element value = doc.getDocumentElement();
+                if (value!=null){
+                    item.addChild(key).addChild(getXMLFromDocument(value));
+                } else {
+                    item.addChild(key).setText(row.getAsString(key));
                 }
-            } else {
-                item.addChild(key).setText(row.get(key));
+            } catch (Exception spe){
+                item.addChild(key).setText(row.getAsString(key));
             }
         }
         return item;
+    }
+
+    //method to convert Document to XML
+    private XML getXMLFromDocument(Element doc)
+    {
+        try
+        {
+            DOMSource domSource = new DOMSource(doc);
+            StringWriter writer = new StringWriter();
+            StreamResult result = new StreamResult(writer);
+            TransformerFactory tf = TransformerFactory.newInstance();
+            Transformer transformer = tf.newTransformer();
+            transformer.setOutputProperty("omit-xml-declaration", "yes");
+            transformer.transform(domSource, result);
+            return XML.read(new StringReader(writer.toString()));
+        }
+        catch(TransformerException ex) {
+            return null;
+        } catch (InvalidXMLFormatException e) {
+            return null;
+        }
     }
 }
